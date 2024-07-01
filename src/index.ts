@@ -5,6 +5,7 @@ import createDB from './database'
 const {DB_URL, PORT} = process.env
 
 if (!DB_URL) throw new Error('Provide DB_URL in your env variable.')
+if (!PORT) throw new Error('Provide PORT in your env variable.')
 
 const db = createDB(DB_URL)
 const app = createApp(db)
