@@ -6,7 +6,10 @@ import createDB from './database'
 const db = createDB(process.env.DATABASE_URL)
 const app = createApp(db)
 
-console.log('db url: ', process.env.DATABASE_URL)
+const {DATABASE_URL} = process.env
+if (!DATABASE_URL) throw new Error('Provide DATABASE_URL in your env variable.')
+
+console.log('db url: ', DATABASE_URL)
 
 describe('GET /messages', () => {
   it('should respond with a 200 status code', async () => {
