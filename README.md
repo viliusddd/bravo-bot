@@ -5,3 +5,4 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 ## Features
 
 - DB is seeded with data.
+- GH Action for linting, testing and build.
