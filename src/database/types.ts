@@ -1,26 +1,29 @@
-import {Generated, Insertable, Selectable, Updateable} from 'kysely'
+import type {ColumnType} from 'kysely'
 
-export interface DB {
-  messages: MessagesTable
-  users: UsersTable
-  sprints: SprintsTable
-}
+export type Generated<T> =
+  T extends ColumnType<infer S, infer I, infer U>
+    ? ColumnType<S, I | undefined, U>
+    : ColumnType<T, T | undefined, T>
 
-export interface MessagesTable {
+export interface Messages {
   id: Generated<number>
   message: string
-  user_id: number
-  sprint_id: number
+  sprintId: number
+  userId: number
 }
 
-export type Message = Selectable<MessagesTable>
-export type NewMessage = Insertable<MessagesTable>
-export type MessageUpdate = Updateable<MessagesTable>
-
-export interface UsersTable {
+export interface Sprints {
   id: Generated<number>
+  name: string
 }
 
-export interface SprintsTable {
+export interface Users {
   id: Generated<number>
+  name: string
+}
+
+export interface DB {
+  messages: Messages
+  sprints: Sprints
+  users: Users
 }

@@ -20,3 +20,4 @@ data/database*
 
 .vscode/
 .gitignore
+.vscode/settings.json
