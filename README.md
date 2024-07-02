@@ -4,4 +4,4 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 
 ## Features
 
-- Seed database with ready-made data.
+- DB is seeded with data.

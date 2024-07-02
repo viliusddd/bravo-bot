@@ -4,14 +4,14 @@ module.exports = {
   root: true,
   extends: [
     'eslint:recommended',
-    'airbnb', // or any other config you want to extend
+    'airbnb-base', // or any other config you want to extend
     'airbnb-typescript/base',
-    'prettier',
+    'prettier'
   ],
   parserOptions: {
     ecmaVersion: 'latest',
     project: './tsconfig.eslint.json',
-    tsconfigRootDir: __dirname,
+    tsconfigRootDir: __dirname
   },
   ignorePatterns: ['**/*.js'],
   rules: {
@@ -22,9 +22,12 @@ module.exports = {
 
     // functions are always hoisted, so we can use them before they are defined
     // which in various cases improves readability
-    'no-use-before-define': ['error', { functions: false }],
-    '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
+    'no-use-before-define': ['error', {functions: false}],
+    '@typescript-eslint/no-use-before-define': ['error', {functions: false}],
 
     'import/prefer-default-export': 'off',
-  },
+    'no-console': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/no-unknown-property': 'off'
+  }
 }

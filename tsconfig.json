@@ -7,9 +7,9 @@
     "outDir": "dist",
     "allowSyntheticDefaultImports": true,
 
-    "module": "ESNext",
+    "module": "NodeNext",
     "target": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
 
     "strict": true,
     "sourceMap": true,

@@ -1,7 +1,6 @@
-import {DB} from './types'
 import SQLite from 'better-sqlite3'
-import {Kysely, KyselyPlugin, SqliteDialect} from 'kysely'
-import {CamelCasePlugin} from 'kysely'
+import {Kysely, KyselyPlugin, SqliteDialect, CamelCasePlugin} from 'kysely'
+import {DB} from './types'
 
 export default function createDB(url: string) {
   const dialect = new SqliteDialect({database: new SQLite(url)})
