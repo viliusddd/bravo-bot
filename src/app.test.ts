@@ -7,9 +7,6 @@ const db = createDB(process.env.DATABASE_URL)
 const app = createApp(db)
 
 const {DATABASE_URL} = process.env
-
-console.log('db url: ', DATABASE_URL)
-
 if (!DATABASE_URL) throw new Error('Provide DATABASE_URL in your env variable.')
 
 describe('GET /messages', () => {
