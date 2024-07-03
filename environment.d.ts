@@ -3,5 +3,6 @@ declare namespace NodeJS {
     [key: string]: string | undefined
     DATABASE_URL: string
     PORT: string
+    DISCORD_BOT_ID: string
   }
 }

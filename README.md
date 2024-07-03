@@ -6,3 +6,7 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 
 - DB is seeded with data.
 - GH Action for linting, testing and build.
+
+## Setup
+
+1. To create new Discor Bot, follow [discordjs.guide](https://discordjs.guide/) instrucitons.
