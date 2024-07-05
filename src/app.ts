@@ -6,9 +6,14 @@ import {type DB} from './database'
 export default function createApp(db: Kysely<DB>) {
   const app = express()
 
-  app.get('/messages', (req, res) => {
-    res.sendStatus(200)
-  })
+  app.use(express.json())
 
+  app.post('/messages', (req, res) => {
+    const {username, sprintCode} = req.body
+    if (!username || !sprintCode) {
+      res.send(400)
+    }
+    res.send({userId: 0})
+  })
   return app
 }

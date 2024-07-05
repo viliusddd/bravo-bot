@@ -15,8 +15,6 @@ export async function up(db: Kysely<any>) {
     .returningAll()
     .execute()
 
-  console.log(users)
-
   const sprints: QueryReturn = await db
     .insertInto('sprints')
     .values([
