@@ -16,7 +16,7 @@ export async function up(db: Kysely<any>) {
   await db.schema
     .createTable('praises')
     .addColumn('id', 'integer', c => c.notNull().primaryKey().autoIncrement())
-    .addColumn('message', 'text', c => c.notNull().unique())
+    .addColumn('praise', 'text', c => c.notNull().unique())
     .execute()
 
   await db.schema
@@ -34,7 +34,7 @@ export async function up(db: Kysely<any>) {
     .addColumn('sprint_id', 'integer', c =>
       c.notNull().references('sprints.id').onDelete('cascade')
     )
-    .addColumn('message_id', 'integer', c =>
+    .addColumn('praise_id', 'integer', c =>
       c.notNull().references('praises.id').onDelete('cascade')
     )
     .addColumn('template_id', 'integer', c =>

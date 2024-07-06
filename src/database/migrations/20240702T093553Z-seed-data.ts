@@ -38,43 +38,43 @@ export async function up(db: Kysely<any>) {
     .insertInto('praises')
     .values([
       {
-        message:
+        praise:
           "You've accomplished something truly amazing! Congratulations on your achievement!"
       },
       {
-        message:
+        praise:
           'You should be so proud of yourself for all of the hard work you put in to reach your goal. Congrats!'
       },
       {
-        message:
+        praise:
           'Your determination and perseverance have paid off in a big way. Congratulations on your success!'
       },
       {
-        message:
+        praise:
           "Congratulations on reaching such a significant milestone. You've earned every bit of recognition coming your way."
       },
       {
-        message:
+        praise:
           'Your achievement is a testament to your talent, passion, and hard work. Keep up the great work!'
       },
       {
-        message:
+        praise:
           "I'm so impressed by your dedication and commitment to achieving your goal. Congratulations on your accomplishment!"
       },
       {
-        message:
+        praise:
           'You are an inspiration to us all with your incredible achievement. Congratulations and keep reaching for the stars!'
       },
       {
-        message:
+        praise:
           'You have set the bar high for all of us with your amazing accomplishment. Congratulations on your success!'
       },
       {
-        message:
+        praise:
           'This impressive achievement has paid off your hard work and dedication. Congrats!'
       },
       {
-        message:
+        praise:
           'You are proof that anything is possible with hard work, determination, and perseverance. Congratulations on your achievement!'
       }
     ])
@@ -116,19 +116,19 @@ export async function up(db: Kysely<any>) {
       {
         user_id: users[0].id,
         sprint_id: sprints[1].id,
-        message_id: praises[2].id,
+        praise_id: praises[2].id,
         template_id: templates[3].id
       },
       {
         user_id: users[1].id,
         sprint_id: sprints[2].id,
-        message_id: praises[3].id,
+        praise_id: praises[3].id,
         template_id: templates[4].id
       },
       {
         user_id: users[2].id,
         sprint_id: sprints[3].id,
-        message_id: praises[4].id,
+        praise_id: praises[4].id,
         template_id: templates[5].id
       }
     ])
