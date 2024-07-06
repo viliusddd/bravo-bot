@@ -7,16 +7,16 @@ export type Generated<T> =
 
 export interface Messages {
   id: Generated<number>
-  message: string
-}
-
-export interface Shoutouts {
-  id: Generated<number>
-  messageId: number
+  praiseId: number
   sprintId: number
   templateId: number
   timestamp: Generated<string>
   userId: number
+}
+
+export interface Praises {
+  id: Generated<number>
+  praise: string
 }
 
 export interface Sprints {
@@ -36,7 +36,7 @@ export interface Users {
 
 export interface DB {
   messages: Messages
-  shoutouts: Shoutouts
+  praises: Praises
   sprints: Sprints
   templates: Templates
   users: Users

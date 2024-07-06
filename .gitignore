@@ -21,3 +21,4 @@ data/database*
 .vscode/
 .gitignore
 .vscode/settings.json
+messages.session.sql

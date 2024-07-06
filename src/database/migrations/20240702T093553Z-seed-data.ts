@@ -84,28 +84,38 @@ export async function up(db: Kysely<any>) {
   const templates: QueryReturn = await db
     .insertInto('templates')
     .values([
-      {template: '{user} has just completed {sprint}!\n{message}{emoji}'},
+      {template: '{username} has just completed {title}!\n{praise} {emoji}'},
       {
         template:
-          '{user} has successfully completed {sprint}!\n{message}{emoji}'
+          '{username} has successfully completed {title}!\n{praise} {emoji}'
       },
       {
         template:
-          'Big congratulations to {user} for finishing {sprint}\n{message}{emoji}!'
+          'Big congratulations to {username} for finishing {title}\n{praise} {emoji}!'
       },
-      {template: '{user} has nailed {sprint}}!\n{message}{emoji}'},
-      {template: 'Kudos to {user} for completing {sprint}!\n{message}{emoji}'},
-      {template: 'Great job {user} on wrapping up {sprint}!\n{message}{emoji}'},
-      {
-        template: 'Hats off to {user} for finishing {sprint}!\n{message}{emoji}'
-      },
-      {template: '{user} has just conquered {sprint}!\n{message}{emoji}'},
-      {template: 'Well done {user} for completing {sprint}!\n{message}{emoji}'},
+      {template: '{username} has nailed {title}!\n{praise} {emoji}'},
       {
         template:
-          'Awesome work, {user}, on finishing  {sprint}!\n{message}{emoji}'
+          'Kudos to {username} for completing {title}!\n{praise} {emoji}'
       },
-      {template: '{user} has achieved {sprint}!\n{message}{emoji}'}
+      {
+        template:
+          'Great job {username} on wrapping up {title}!\n{praise} {emoji}'
+      },
+      {
+        template:
+          'Hats off to {username} for finishing {title}!\n{praise} {emoji}'
+      },
+      {template: '{username} has just conquered {title}!\n{praise} {emoji}'},
+      {
+        template:
+          'Well done {username} for completing {title}!\n{praise} {emoji}'
+      },
+      {
+        template:
+          'Awesome work, {username}, on finishing  {title}!\n{praise} {emoji}'
+      },
+      {template: '{username} has achieved {title}!\n{praise} {emoji}'}
     ])
     .returningAll()
     .execute()
