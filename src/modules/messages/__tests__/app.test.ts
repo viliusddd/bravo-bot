@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import request from 'supertest'
-import createApp from './app'
-import createDB from './database'
+import createApp from '@/app'
+import createDB from '@/database'
 
 const {DATABASE_URL} = process.env
 if (!DATABASE_URL) throw new Error('Provide DATABASE_URL in your env variable.')

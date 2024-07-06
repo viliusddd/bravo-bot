@@ -8,22 +8,36 @@ export type Generated<T> =
 export interface Messages {
   id: Generated<number>
   message: string
+}
+
+export interface Shoutouts {
+  id: Generated<number>
+  messageId: number
   sprintId: number
+  templateId: number
+  timestamp: Generated<string>
   userId: number
 }
 
 export interface Sprints {
+  id: string
+  title: string
+}
+
+export interface Templates {
   id: Generated<number>
-  name: string
+  template: string
 }
 
 export interface Users {
   id: Generated<number>
-  name: string
+  username: string
 }
 
 export interface DB {
   messages: Messages
+  shoutouts: Shoutouts
   sprints: Sprints
+  templates: Templates
   users: Users
 }

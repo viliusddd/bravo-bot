@@ -6,10 +6,13 @@
     "rootDir": ".",
     "outDir": "dist",
     "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
 
-    "module": "NodeNext",
+    "module": "ESNext",
     "target": "ESNext",
-    "moduleResolution": "NodeNext",
+    // "moduleResolution": "NodeNext",
+    "moduleResolution": "bundler",
 
     "strict": true,
     "sourceMap": true,

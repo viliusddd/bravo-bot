@@ -4,7 +4,8 @@
   "author": "Vilius Juodžiukynas",
   "license": "MIT",
   "description": "It's a dynamic Discord bot powered by a REST API that celebrates user achievements by sending personalized congratulatory messages and celebratory GIFs whenever a sprint is completed.",
-  "main": "index.js",
+  "main": "index.ts",
+  "type": "module",
   "scripts": {
     "start": "tsx src",
     "dev": "tsx watch src",

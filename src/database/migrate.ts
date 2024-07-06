@@ -4,6 +4,11 @@ import {promises as fs} from 'fs'
 import {Kysely, Migrator, FileMigrationProvider, SqliteDialect} from 'kysely'
 import SQLite, {type Database} from 'better-sqlite3'
 
+import {fileURLToPath} from 'url'
+import {dirname} from 'path'
+
+const filename = fileURLToPath(import.meta.url)
+
 async function migrateToLatest(url: string) {
   const db = new Kysely<Database>({
     dialect: new SqliteDialect({
@@ -16,7 +21,7 @@ async function migrateToLatest(url: string) {
     provider: new FileMigrationProvider({
       fs,
       path,
-      migrationFolder: path.join(__dirname, 'migrations')
+      migrationFolder: path.join(dirname(filename), 'migrations')
     })
   })
 
