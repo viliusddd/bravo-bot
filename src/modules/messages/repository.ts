@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import SQLite from 'better-sqlite3'
 import {Kysely, KyselyPlugin, CamelCasePlugin, SqliteDialect} from 'kysely'
+import type {JoinedRows} from './types'
 
 import type {DB} from '@/database/types'
 
@@ -9,13 +10,6 @@ const {DATABASE_URL} = process.env
 const plugins: KyselyPlugin[] = [new CamelCasePlugin()]
 const dialect = new SqliteDialect({database: new SQLite(DATABASE_URL)})
 const db = new Kysely<DB>({dialect, plugins})
-
-type JoinedRows = {
-  username: string
-  title: string
-  praise: string
-  template: string
-}
 
 export async function findAll() {
   const data: JoinedRows[] = await db

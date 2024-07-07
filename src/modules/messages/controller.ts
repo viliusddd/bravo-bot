@@ -8,9 +8,14 @@ const router = Router()
 interface TypedRequestBody<T> extends Express.Request {
   body: T
 }
-
 export interface TypedResponse<ResBody> extends Express.Response {
   json: Send<ResBody, this>
+}
+
+type Keys = {
+  username: string
+  title: string
+  praise: string
 }
 
 router
@@ -29,29 +34,15 @@ router
       res.json({userId: 0})
     }
   )
-  .get(
-    async (
-      req: Request,
-      res: TypedResponse<
-        {
-          username: string
-          title: string
-          praise: string
-          template: string
-        }[]
-      >
-    ) => {
-      const rows = await findAll()
+  .get(async (req: Request, res: TypedResponse<string[]>) => {
+    const rows = await findAll()
 
-      const newRows = rows.map(row =>
-        templMsg(row.template, (({template, ...rest}) => rest)(row))
-      )
+    const newRows = rows.map(row => {
+      const keys: Keys = (({template, ...rest}): Keys => rest)(row)
+      return templMsg(row.template, keys)
+    })
 
-      console.log(newRows)
-
-      // TODO: this should return array with messages [{username: message}, ...] ?
-      return res.json(rows)
-    }
-  )
+    return res.json(newRows)
+  })
 
 export default router
