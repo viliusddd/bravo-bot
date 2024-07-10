@@ -5,39 +5,46 @@ export type Generated<T> =
     ? ColumnType<S, I | undefined, U>
     : ColumnType<T, T | undefined, T>
 
-export interface Messages {
+export interface Emoji {
+  emojiStr: string
+  id: Generated<number>
+}
+
+export interface Message {
+  emojiId: number
   id: Generated<number>
   praiseId: number
-  sprintId: number
+  sprintId: string
   templateId: number
   timestamp: Generated<string>
   userId: number
 }
 
-export interface Praises {
+export interface Praise {
   id: Generated<number>
-  praise: string
+  praiseStr: string
 }
 
-export interface Sprints {
+export interface Sprint {
   id: string
   title: string
 }
 
-export interface Templates {
+export interface Template {
   id: Generated<number>
-  template: string
+  templateStr: string
 }
 
-export interface Users {
+export interface User {
   id: Generated<number>
   username: string
 }
 
 export interface DB {
-  messages: Messages
-  praises: Praises
-  sprints: Sprints
-  templates: Templates
-  users: Users
+  emoji: Emoji
+  message: Message
+  praise: Praise
+  sprint: Sprint
+  template: Template
+  user: User
 }

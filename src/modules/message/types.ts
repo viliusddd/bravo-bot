@@ -1,6 +1,6 @@
 export type JoinedRows = {
   username: string
   title: string
-  praise: string
-  template: string
+  praise_str: string
+  template_str: string
 }

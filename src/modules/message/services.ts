@@ -1,12 +1,9 @@
-import {EMOJIS} from '@/config'
+import {snakeToCamel} from './utils'
 
 /**
  * Replace values inside template, within brackets, with supplied values.
  */
 export function templMsg(template: string, keys: {[x: string]: string}) {
-  const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)]
-  const appendedKeys: {[x: string]: string} = {...keys, emoji}
-
   const regexp = /{([^{]*?)}/g
   const matches = template.match(regexp)
 
@@ -15,8 +12,8 @@ export function templMsg(template: string, keys: {[x: string]: string}) {
   }
 
   return matches.reduce((accum, match) => {
-    const key = match.replace(/[{}]/g, '')
+    const key = snakeToCamel(match.replace(/[{}]/g, ''))
 
-    return accum.replace(match, appendedKeys[key])
+    return accum.replace(match, keys[key])
   }, template)
 }

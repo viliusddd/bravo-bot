@@ -1,7 +1,7 @@
 import express from 'express'
 import {type Kysely} from 'kysely'
 import {type DB} from './database'
-import messages from '@/modules/messages/controller'
+import messages from '@/modules/message/controller'
 
 /* eslint @typescript-eslint/no-unused-vars: */
 export default function createApp(db: Kysely<DB>) {

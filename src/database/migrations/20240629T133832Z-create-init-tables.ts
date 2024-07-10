@@ -2,43 +2,52 @@ import {type Kysely, sql} from 'kysely'
 
 export async function up(db: Kysely<any>) {
   await db.schema
-    .createTable('users')
+    .createTable('user')
     .addColumn('id', 'integer', c => c.notNull().primaryKey().autoIncrement())
     .addColumn('username', 'text', c => c.notNull().unique())
     .execute()
 
   await db.schema
-    .createTable('sprints')
+    .createTable('sprint')
     .addColumn('id', 'text', c => c.notNull().primaryKey())
     .addColumn('title', 'text', c => c.notNull().unique())
     .execute()
 
   await db.schema
-    .createTable('praises')
+    .createTable('praise')
     .addColumn('id', 'integer', c => c.notNull().primaryKey().autoIncrement())
-    .addColumn('praise', 'text', c => c.notNull().unique())
+    .addColumn('praise_str', 'text', c => c.notNull().unique())
     .execute()
 
   await db.schema
-    .createTable('templates')
+    .createTable('template')
     .addColumn('id', 'integer', c => c.notNull().primaryKey().autoIncrement())
-    .addColumn('template', 'text', c => c.notNull().unique())
+    .addColumn('template_str', 'text', c => c.notNull().unique())
     .execute()
 
   await db.schema
-    .createTable('messages')
+    .createTable('emoji')
+    .addColumn('id', 'integer', c => c.notNull().primaryKey().autoIncrement())
+    .addColumn('emoji_str', 'text', c => c.notNull().unique())
+    .execute()
+
+  await db.schema
+    .createTable('message')
     .addColumn('id', 'integer', c => c.notNull().primaryKey().autoIncrement())
     .addColumn('user_id', 'integer', c =>
-      c.notNull().references('users.id').onDelete('cascade')
+      c.notNull().references('user.id').onDelete('cascade')
     )
-    .addColumn('sprint_id', 'integer', c =>
-      c.notNull().references('sprints.id').onDelete('cascade')
+    .addColumn('sprint_id', 'text', c =>
+      c.notNull().references('sprint.id').onDelete('cascade')
     )
     .addColumn('praise_id', 'integer', c =>
-      c.notNull().references('praises.id').onDelete('cascade')
+      c.notNull().references('praise.id').onDelete('cascade')
     )
     .addColumn('template_id', 'integer', c =>
-      c.notNull().references('templates.id').onDelete('cascade')
+      c.notNull().references('template.id').onDelete('cascade')
+    )
+    .addColumn('emoji_id', 'integer', c =>
+      c.notNull().references('emoji.id').onDelete('cascade')
     )
     .addColumn('timestamp', 'text', c =>
       c.defaultTo(sql`CURRENT_TIMESTAMP`).notNull()
@@ -47,9 +56,9 @@ export async function up(db: Kysely<any>) {
 }
 
 export async function down(db: Kysely<any>) {
-  await db.schema.dropTable('users').execute()
-  await db.schema.dropTable('sprints').execute()
-  await db.schema.dropTable('praises').execute()
-  await db.schema.dropTable('templates').execute()
-  await db.schema.dropTable('messages').execute()
+  await db.schema.dropTable('user').execute()
+  await db.schema.dropTable('sprint').execute()
+  await db.schema.dropTable('praise').execute()
+  await db.schema.dropTable('template').execute()
+  await db.schema.dropTable('message').execute()
 }
