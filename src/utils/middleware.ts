@@ -1,10 +1,5 @@
-import {
-  type Response,
-  type Request,
-  type NextFunction,
-  type RequestHandler,
-} from 'express'
-import { StatusCodes } from 'http-status-codes'
+import type {Response, Request, NextFunction, RequestHandler} from 'express'
+import {StatusCodes} from 'http-status-codes'
 import MethodNotAllowed from './errors/MethodNotAllowed'
 
 type JsonHandler<T> = (
@@ -23,7 +18,7 @@ export function jsonRoute<T>(
   handler: JsonHandler<T>,
   statusCode = StatusCodes.OK
 ): RequestHandler {
-  return async (req, res, next) => {
+  return async (req: Request, res: Response, next) => {
     try {
       const result = await handler(req, res, next)
       res.status(statusCode)

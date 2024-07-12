@@ -1,10 +1,10 @@
-import {Router} from 'express'
+import {type Request, Router} from 'express'
 import {StatusCodes} from 'http-status-codes'
-import {jsonRoute, unsupportedRoute} from '@/utils/middleware'
-import buildRepository from './repository'
-import * as schema from './schema'
-import {PraiseNotFound} from './errors'
 import {Database} from '@/database'
+import {jsonRoute} from '@/utils/middleware'
+import {PraiseNotFound} from './errors'
+import * as schema from './schema'
+import buildRepository from './repository'
 
 export default (db: Database) => {
   const router = Router()
@@ -14,7 +14,7 @@ export default (db: Database) => {
     .route('/')
     .get(jsonRoute(praises.findAll))
     .post(
-      jsonRoute(async req => {
+      jsonRoute(async (req: Request) => {
         const body = schema.parseInsertable(req.body)
 
         return praises.create(body)
@@ -24,33 +24,32 @@ export default (db: Database) => {
   router
     .route('/:id(\\d+)')
     .get(
-      jsonRoute(async req => {
+      jsonRoute(async (req: Request) => {
         const id = schema.parseId(req.params.id)
         const record = await praises.findById(id)
-        console.log('test')
-        console.log(record)
 
-        if (!record) {
-          throw new PraiseNotFound()
-        }
-
+        if (!record) throw new PraiseNotFound()
         return record
       })
     )
     .patch(
-      jsonRoute(async req => {
+      jsonRoute(async (req: Request) => {
         const id = schema.parseId(req.params.id)
         const bodyPatch = schema.parseUpdateable(req.body)
         const record = await praises.update(id, bodyPatch)
 
-        if (!record) {
-          throw new PraiseNotFound()
-        }
-
+        if (!record) throw new PraiseNotFound()
         return record
       })
     )
-    .delete(unsupportedRoute)
+    .delete(
+      jsonRoute(async (req: Request) => {
+        const id = schema.parseId(req.params.id)
+        const record = await praises.remove(id)
+
+        if (!record) throw new PraiseNotFound()
+      }, StatusCodes.NO_CONTENT)
+    )
 
   return router
 }

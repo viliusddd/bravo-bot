@@ -5,8 +5,6 @@ import {omit} from 'lodash/fp'
 import {fakePraise, praiseMatcher} from './utils'
 import createApp from '@/app'
 
-// our test database is completely empty and it is only used by
-// this test module, so we are free to do whatever we want with it
 const db = await createTestDatabase()
 const app = createApp(db)
 
@@ -40,12 +38,12 @@ describe('GET', () => {
   it('should return a list of existing praises', async () => {
     // ARRANGE (Given that we have...)
     await createPraises([
-      // we have a function that spits out a generic fake article
+      // we have a function that spits out a generic fake praise
       fakePraise(),
 
-      // we generate a slightly different article
+      // we generate a slightly different praise
       // in this function call we provide what should
-      // be different from the our default generic article
+      // be different from the our default generic praise
       fakePraise({
         praiseStr: 'You did really well 1!'
       })
@@ -79,7 +77,7 @@ describe('GET', () => {
 })
 
 describe('GET /:id', () => {
-  it('should return 404 if article does not exist', async () => {
+  it('should return 404 if praise does not exist', async () => {
     // ACT (When we request...)
     const {body} = await supertest(app).get('/praises/2912').expect(404)
 
@@ -90,11 +88,11 @@ describe('GET /:id', () => {
     // around our expectations. If we wanted to slightly change
     // our error message in code, we would not want these tests to break,
     // as long as the error message still contains "not found" in some
-    // form: "ArticleNotFound", "Not found", "Article was not found"...
+    // form: "PraiseNotFound", "Not found", "Praise was not found"...
     expect(body.error.message).toMatch(/not found/i)
   })
 
-  it('should return an article if it exists', async () => {
+  it('should return an praise if it exists', async () => {
     // ARRANGE (Given that we have...)
     await createPraises([
       fakePraise({
@@ -196,7 +194,24 @@ describe('PATCH /:id', () => {
 })
 
 describe('DELETE', () => {
-  it('does not support deleting', async () => {
-    await supertest(app).delete('/praises/123').expect(405)
+  it('returns 404 if praise does not exist', async () => {
+    const {body} = await supertest(app).delete('/praises/123456').expect(404)
+
+    expect(body.error.message).toMatch(/not found/i)
+  })
+
+  it('returns 204 on successfull deletion', async () => {
+    const id = 123
+    await createPraises([fakePraise({id})])
+
+    await supertest(app).delete('/praises/123').expect(204)
+  })
+
+  it.todo('returns no body content on success', async () => {
+    const id = 123
+    await createPraises([fakePraise({id})])
+
+    const body = await supertest(app).delete('/praises/123')
+    expect(body).toEqual({})
   })
 })
