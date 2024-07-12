@@ -18,18 +18,18 @@ export async function up(db: Kysely<any>) {
   const sprint: QueryReturn = await db
     .insertInto('sprint')
     .values([
-      {id: 'WD-1.1.5', title: 'First Steps Into Programming with Python'},
-      {id: 'WD-1.2.5', title: 'Intermediate Programming with Python'},
-      {id: 'WD-1.3.4', title: 'Object Oriented Programming'},
-      {id: 'WD-1.4.4', title: 'Computer Science Fundamentals'},
-      {id: 'WD-2.1.5', title: 'HTML and CSS - the Foundation of Web Pages'},
-      {id: 'WD-2.2.5', title: 'Improving Websites with Javascript'},
-      {id: 'WD-2.3.5', title: 'Learning Your First Framework - Vue.js'},
-      {id: 'WD-2.4.5', title: 'Typing and Testing JavaScript'},
-      {id: 'WD-3.1.5', title: 'Node.js and Relational Databases'},
-      {id: 'WD-3.2.5', title: 'REST APIs & Test Driven Development'},
-      {id: 'WD-3.3.5', title: 'Full-stack Fundamentals'},
-      {id: 'WD-3.4.4', title: 'Containers and CI/CD'}
+      {code: 'WD-1.1.5', title: 'First Steps Into Programming with Python'},
+      {code: 'WD-1.2.5', title: 'Intermediate Programming with Python'},
+      {code: 'WD-1.3.4', title: 'Object Oriented Programming'},
+      {code: 'WD-1.4.4', title: 'Computer Science Fundamentals'},
+      {code: 'WD-2.1.5', title: 'HTML and CSS - the Foundation of Web Pages'},
+      {code: 'WD-2.2.5', title: 'Improving Websites with Javascript'},
+      {code: 'WD-2.3.5', title: 'Learning Your First Framework - Vue.js'},
+      {code: 'WD-2.4.5', title: 'Typing and Testing JavaScript'},
+      {code: 'WD-3.1.5', title: 'Node.js and Relational Databases'},
+      {code: 'WD-3.2.5', title: 'REST APIs & Test Driven Development'},
+      {code: 'WD-3.3.5', title: 'Full-stack Fundamentals'},
+      {code: 'WD-3.4.4', title: 'Containers and CI/CD'}
     ])
     .returningAll()
     .execute()
@@ -191,20 +191,7 @@ export async function down(db: Kysely<any>) {
 
   await db
     .deleteFrom('sprint')
-    .where('id', 'in', [
-      'WD-1.1.5',
-      'WD-1.2.5',
-      'WD-1.3.4',
-      'WD-1.4.4',
-      'WD-2.1.5',
-      'WD-2.2.5',
-      'WD-2.3.5',
-      'WD-2.4.5',
-      'WD-3.1.5',
-      'WD-3.2.5',
-      'WD-3.3.5',
-      'WD-3.4.4'
-    ])
+    .where('id', 'in', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     .execute()
 
   await db

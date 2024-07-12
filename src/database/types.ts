@@ -14,7 +14,7 @@ export interface Message {
   emojiId: number
   id: Generated<number>
   praiseId: number
-  sprintId: string
+  sprintId: number
   templateId: number
   timestamp: Generated<string>
   userId: number
@@ -26,7 +26,8 @@ export interface Praise {
 }
 
 export interface Sprint {
-  id: string
+  code: string
+  id: Generated<number>
   title: string
 }
 

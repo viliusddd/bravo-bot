@@ -9,7 +9,8 @@ export async function up(db: Kysely<any>) {
 
   await db.schema
     .createTable('sprint')
-    .addColumn('id', 'text', c => c.notNull().primaryKey())
+    .addColumn('id', 'integer', c => c.notNull().primaryKey().autoIncrement())
+    .addColumn('code', 'text', c => c.notNull().unique())
     .addColumn('title', 'text', c => c.notNull().unique())
     .execute()
 
@@ -37,7 +38,7 @@ export async function up(db: Kysely<any>) {
     .addColumn('user_id', 'integer', c =>
       c.notNull().references('user.id').onDelete('cascade')
     )
-    .addColumn('sprint_id', 'text', c =>
+    .addColumn('sprint_id', 'integer', c =>
       c.notNull().references('sprint.id').onDelete('cascade')
     )
     .addColumn('praise_id', 'integer', c =>
