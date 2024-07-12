@@ -1,14 +1,14 @@
 import {expect} from 'vitest'
 import type {Insertable} from 'kysely'
-import type {Praise} from '@/database'
+import type {Template} from '@/database'
 
 // Function to generate fake data.
-// If our praises schema changes and our tests break,
+// If our templates schema changes and our tests break,
 // we will not have to update all our tests, but only this function.
-export const fakePraise = (
-  overrides: Partial<Insertable<Praise>> = {}
-): Insertable<Praise> => ({
-  praiseStr: 'You did really well!',
+export const fakeTemplate = (
+  overrides: Partial<Insertable<Template>> = {}
+): Insertable<Template> => ({
+  templateStr: 'You did really well!',
   ...overrides
 })
 
@@ -16,15 +16,17 @@ export const fakePraise = (
 // You are free to use simple hard-coded expectations for your tests.
 // However, if you want to be have tests that pin-point the exact issue,
 // you should consider matchers.
-export const praiseMatcher = (overrides: Partial<Insertable<Praise>> = {}) => ({
+export const templateMatcher = (
+  overrides: Partial<Insertable<Template>> = {}
+) => ({
   id: expect.any(Number),
   ...overrides, // for id
-  ...fakePraise(overrides)
+  ...fakeTemplate(overrides)
 })
 
-export const fakePraiseFull = (
-  overrides: Partial<Insertable<Praise>> = {}
+export const fakeTemplateFull = (
+  overrides: Partial<Insertable<Template>> = {}
 ) => ({
   id: 2,
-  ...fakePraise(overrides)
+  ...fakeTemplate(overrides)
 })

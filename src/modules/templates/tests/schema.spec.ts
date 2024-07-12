@@ -1,23 +1,23 @@
 import {omit} from 'lodash/fp'
 import {parse, parseInsertable, parseUpdateable} from '../schema'
-import {fakePraiseFull} from './utils'
+import {fakeTemplateFull} from './utils'
 
 // Generally, schemas are tested with a few examples of valid and invalid records.
 
 it('parses a valid record', () => {
-  const record = fakePraiseFull()
+  const record = fakeTemplateFull()
 
   expect(parse(record)).toEqual(record)
 })
 
 it('throws an error due to empty/missing title (concrete)', () => {
   // ARRANGE
-  const praiseWithoutTitle = {
+  const templateWithoutTitle = {
     id: 52,
     title: '',
     content: 'content'
   }
-  const praiseEmptyTitle = {
+  const templateEmptyTitle = {
     id: 52,
     title: '',
     content: 'content'
@@ -26,24 +26,24 @@ it('throws an error due to empty/missing title (concrete)', () => {
   // ACT & ASSERT
   // expect our function to throw an error that
   // mentions an issue with the title
-  expect(() => parse(praiseWithoutTitle)).toThrow(/praiseStr/i)
-  expect(() => parse(praiseEmptyTitle)).toThrow(/praiseStr/i)
+  expect(() => parse(templateWithoutTitle)).toThrow(/templateStr/i)
+  expect(() => parse(templateEmptyTitle)).toThrow(/templateStr/i)
 })
 
 it('throws an error due to empty/missing content', () => {
-  const recordWithoutContent = omit(['praiseStr'], fakePraiseFull())
-  const recordEmpty = fakePraiseFull({
-    praiseStr: ''
+  const recordWithoutContent = omit(['templateStr'], fakeTemplateFull())
+  const recordEmpty = fakeTemplateFull({
+    templateStr: ''
   })
 
-  expect(() => parse(recordWithoutContent)).toThrow(/praiseStr/i)
-  expect(() => parse(recordEmpty)).toThrow(/praiseStr/i)
+  expect(() => parse(recordWithoutContent)).toThrow(/templateStr/i)
+  expect(() => parse(recordEmpty)).toThrow(/templateStr/i)
 })
 
 // every other function is a derivative of parse()
 describe('parseInsertable', () => {
   it('omits id', () => {
-    const parsed = parseInsertable(fakePraiseFull())
+    const parsed = parseInsertable(fakeTemplateFull())
 
     expect(parsed).not.toHaveProperty('id')
   })
@@ -51,7 +51,7 @@ describe('parseInsertable', () => {
 
 describe('parseUpdateable', () => {
   it('omits id', () => {
-    const parsed = parseUpdateable(fakePraiseFull())
+    const parsed = parseUpdateable(fakeTemplateFull())
 
     expect(parsed).not.toHaveProperty('id')
   })
