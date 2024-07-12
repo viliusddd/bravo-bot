@@ -10,33 +10,30 @@ it('parses a valid record', () => {
   expect(parse(record)).toEqual(record)
 })
 
-it('throws an error due to empty/missing title (concrete)', () => {
+it('throws an error due to empty/missing templateStr (concrete)', () => {
   // ARRANGE
-  const templateWithoutTitle = {
-    id: 52,
-    title: '',
-    content: 'content'
+  const templateWithoutStr = {
+    id: 52
   }
-  const templateEmptyTitle = {
+  const templateEmptyStr = {
     id: 52,
-    title: '',
-    content: 'content'
+    templateStr: ''
   }
 
   // ACT & ASSERT
   // expect our function to throw an error that
   // mentions an issue with the title
-  expect(() => parse(templateWithoutTitle)).toThrow(/templateStr/i)
-  expect(() => parse(templateEmptyTitle)).toThrow(/templateStr/i)
+  expect(() => parse(templateWithoutStr)).toThrow(/templateStr/i)
+  expect(() => parse(templateEmptyStr)).toThrow(/templateStr/i)
 })
 
 it('throws an error due to empty/missing content', () => {
-  const recordWithoutContent = omit(['templateStr'], fakeTemplateFull())
+  const recordWithoutStr = omit(['templateStr'], fakeTemplateFull())
   const recordEmpty = fakeTemplateFull({
     templateStr: ''
   })
 
-  expect(() => parse(recordWithoutContent)).toThrow(/templateStr/i)
+  expect(() => parse(recordWithoutStr)).toThrow(/templateStr/i)
   expect(() => parse(recordEmpty)).toThrow(/templateStr/i)
 })
 

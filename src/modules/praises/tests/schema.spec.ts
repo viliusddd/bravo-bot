@@ -10,33 +10,30 @@ it('parses a valid record', () => {
   expect(parse(record)).toEqual(record)
 })
 
-it('throws an error due to empty/missing title (concrete)', () => {
+it('throws an error due to empty/missing praiseStr (concrete)', () => {
   // ARRANGE
-  const praiseWithoutTitle = {
-    id: 52,
-    title: '',
-    content: 'content'
+  const praiseWithoutStr = {
+    id: 52
   }
-  const praiseEmptyTitle = {
+  const praiseEmptyStr = {
     id: 52,
-    title: '',
-    content: 'content'
+    praiseStr: ''
   }
 
   // ACT & ASSERT
   // expect our function to throw an error that
   // mentions an issue with the title
-  expect(() => parse(praiseWithoutTitle)).toThrow(/praiseStr/i)
-  expect(() => parse(praiseEmptyTitle)).toThrow(/praiseStr/i)
+  expect(() => parse(praiseWithoutStr)).toThrow(/praiseStr/i)
+  expect(() => parse(praiseEmptyStr)).toThrow(/praiseStr/i)
 })
 
 it('throws an error due to empty/missing content', () => {
-  const recordWithoutContent = omit(['praiseStr'], fakePraiseFull())
+  const recordWithoutStr = omit(['praiseStr'], fakePraiseFull())
   const recordEmpty = fakePraiseFull({
     praiseStr: ''
   })
 
-  expect(() => parse(recordWithoutContent)).toThrow(/praiseStr/i)
+  expect(() => parse(recordWithoutStr)).toThrow(/praiseStr/i)
   expect(() => parse(recordEmpty)).toThrow(/praiseStr/i)
 })
 
