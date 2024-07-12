@@ -8,7 +8,7 @@ import type {Template} from '@/database'
 export const fakeTemplate = (
   overrides: Partial<Insertable<Template>> = {}
 ): Insertable<Template> => ({
-  templateStr: 'You did really well!',
+  templateStr: '{username} has achieved {title}! {praise_str} {emoji_str}',
   ...overrides
 })
 

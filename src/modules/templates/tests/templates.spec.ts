@@ -45,7 +45,8 @@ describe('GET', () => {
       // in this function call we provide what should
       // be different from the our default generic template
       fakeTemplate({
-        templateStr: 'You did really well 1!'
+        templateStr:
+          '{username} has achieved {title}! {praise_str} {emoji_str} 2'
       })
     ])
 
@@ -56,7 +57,8 @@ describe('GET', () => {
     expect(body).toEqual([
       templateMatcher(),
       templateMatcher({
-        templateStr: 'You did really well 1!'
+        templateStr:
+          '{username} has achieved {title}! {praise_str} {emoji_str} 2'
       })
     ])
 
@@ -136,7 +138,12 @@ describe('POST', () => {
   it('should return 201 and created template record', async () => {
     const {body} = await supertest(app)
       .post('/templates')
-      .send(fakeTemplate())
+      .send(
+        fakeTemplate({
+          templateStr:
+            '{username} has achieved {title}! {praise_str} {emoji_str}'
+        })
+      )
       .expect(201)
 
     expect(body).toEqual(templateMatcher())
@@ -163,13 +170,15 @@ describe('PATCH /:id', () => {
 
     const {body} = await supertest(app)
       .patch(`/templates/${137234}`)
-      .send({templateStr: 'Job well done!'})
+      .send({
+        templateStr: '{username} has achieved {title}! {praise_str} {emoji_str}'
+      })
       .expect(200)
 
     expect(body).toEqual(
       templateMatcher({
         id,
-        templateStr: 'Job well done!'
+        templateStr: '{username} has achieved {title}! {praise_str} {emoji_str}'
       })
     )
   })
@@ -180,14 +189,16 @@ describe('PATCH /:id', () => {
 
     await supertest(app)
       .patch(`/templates/${id}`)
-      .send({templateStr: 'Job well done!'})
+      .send({
+        templateStr: '{username} has achieved {title}! {praise_str} {emoji_str}'
+      })
       .expect(200)
 
     const {body} = await supertest(app).get('/templates/41512').expect(200)
 
     expect(body).toEqual(
       templateMatcher({
-        templateStr: 'Job well done!'
+        templateStr: '{username} has achieved {title}! {praise_str} {emoji_str}'
       })
     )
   })
