@@ -8,6 +8,8 @@ import {templMsg} from './services'
 import {jsonRoute, unsupportedRoute} from '@/utils/middleware'
 import * as schema from './schema'
 import {MessageNotFound} from './errors'
+import {SprintNotFound} from '../sprints/errors'
+import {UserNotFound} from '../users/errors'
 
 interface TypedRequestBody<T> extends Express.Request {
   body: T
@@ -27,11 +29,14 @@ export default (db: Database) => {
       const {username, sprint} = req.query
       let record
 
-      if (typeof username === 'string')
-        record = messages.findByUsername(username)
-      else if (typeof sprint === 'string')
-        record = messages.findBySprint(sprint)
-      else throw new MessageNotFound()
+      if (typeof username === 'string') {
+        record = await messages.findByUsername(username)
+
+        if (!record) throw new UserNotFound()
+      } else if (typeof sprint === 'string') {
+        record = await messages.findBySprint(sprint)
+        if (!record) throw new SprintNotFound()
+      } else throw new MessageNotFound()
 
       return record
     })
