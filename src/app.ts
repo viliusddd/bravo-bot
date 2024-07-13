@@ -14,11 +14,11 @@ export default function createApp(db: Kysely<DB>) {
 
   app.use(express.json())
 
-  // app.use('/messages', messages(db))
-  app.use('/templates', templates(db))
-  app.use('/sprints', sprints(db))
-  app.use('/praises', praises(db))
   app.use('/emojis', emojis(db))
+  app.use('/messages', messages(db))
+  app.use('/praises', praises(db))
+  app.use('/sprints', sprints(db))
+  app.use('/templates', templates(db))
   app.use('/users', users(db))
 
   app.use(jsonErrorHandler)
