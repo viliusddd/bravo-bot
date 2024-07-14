@@ -24,9 +24,9 @@ export interface Praise {
 }
 
 export interface Sprint {
-  code: string
   id: Generated<number>
-  title: string
+  sprintCode: string
+  sprintTitle: string
 }
 
 export interface Template {

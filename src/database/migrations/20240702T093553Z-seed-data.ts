@@ -18,18 +18,39 @@ export async function up(db: Kysely<any>) {
   const sprint: QueryReturn = await db
     .insertInto('sprint')
     .values([
-      {code: 'WD-1.1.5', title: 'First Steps Into Programming with Python'},
-      {code: 'WD-1.2.5', title: 'Intermediate Programming with Python'},
-      {code: 'WD-1.3.4', title: 'Object Oriented Programming'},
-      {code: 'WD-1.4.4', title: 'Computer Science Fundamentals'},
-      {code: 'WD-2.1.5', title: 'HTML and CSS - the Foundation of Web Pages'},
-      {code: 'WD-2.2.5', title: 'Improving Websites with Javascript'},
-      {code: 'WD-2.3.5', title: 'Learning Your First Framework - Vue.js'},
-      {code: 'WD-2.4.5', title: 'Typing and Testing JavaScript'},
-      {code: 'WD-3.1.5', title: 'Node.js and Relational Databases'},
-      {code: 'WD-3.2.5', title: 'REST APIs & Test Driven Development'},
-      {code: 'WD-3.3.5', title: 'Full-stack Fundamentals'},
-      {code: 'WD-3.4.4', title: 'Containers and CI/CD'}
+      {
+        sprint_code: 'WD-1.1.5',
+        sprint_title: 'First Steps Into Programming with Python'
+      },
+      {
+        sprint_code: 'WD-1.2.5',
+        sprint_title: 'Intermediate Programming with Python'
+      },
+      {sprint_code: 'WD-1.3.4', sprint_title: 'Object Oriented Programming'},
+      {sprint_code: 'WD-1.4.4', sprint_title: 'Computer Science Fundamentals'},
+      {
+        sprint_code: 'WD-2.1.5',
+        sprint_title: 'HTML and CSS - the Foundation of Web Pages'
+      },
+      {
+        sprint_code: 'WD-2.2.5',
+        sprint_title: 'Improving Websites with Javascript'
+      },
+      {
+        sprint_code: 'WD-2.3.5',
+        sprint_title: 'Learning Your First Framework - Vue.js'
+      },
+      {sprint_code: 'WD-2.4.5', sprint_title: 'Typing and Testing JavaScript'},
+      {
+        sprint_code: 'WD-3.1.5',
+        sprint_title: 'Node.js and Relational Databases'
+      },
+      {
+        sprint_code: 'WD-3.2.5',
+        sprint_title: 'REST APIs & Test Driven Development'
+      },
+      {sprint_code: 'WD-3.3.5', sprint_title: 'Full-stack Fundamentals'},
+      {sprint_code: 'WD-3.4.4', sprint_title: 'Containers and CI/CD'}
     ])
     .returningAll()
     .execute()
@@ -103,46 +124,47 @@ export async function up(db: Kysely<any>) {
     .values([
       {
         template_str:
-          '{username} has just completed {title}! {praise_str} {emoji_str}'
+          '{username} has just completed {sprint_title}! {praise_str} {emoji_str}'
       },
       {
         template_str:
-          '{username} has successfully completed {title}! {praise_str} {emoji_str}'
+          '{username} has successfully completed {sprint_title}! {praise_str} {emoji_str}'
       },
       {
         template_str:
-          'Big congratulations to {username} for finishing {title} {praise_str} {emoji_str}!'
-      },
-      {
-        template_str: '{username} has nailed {title}! {praise_str} {emoji_str}'
+          'Big congratulations to {username} for finishing {sprint_title} {praise_str} {emoji_str}!'
       },
       {
         template_str:
-          'Kudos to {username} for completing {title}! {praise_str} {emoji_str}'
+          '{username} has nailed {sprint_title}! {praise_str} {emoji_str}'
       },
       {
         template_str:
-          'Great job {username} on wrapping up {title}! {praise_str} {emoji_str}'
+          'Kudos to {username} for completing {sprint_title}! {praise_str} {emoji_str}'
       },
       {
         template_str:
-          'Hats off to {username} for finishing {title}! {praise_str} {emoji_str}'
+          'Great job {username} on wrapping up {sprint_title}! {praise_str} {emoji_str}'
       },
       {
         template_str:
-          '{username} has just conquered {title}! {praise_str} {emoji_str}'
+          'Hats off to {username} for finishing {sprint_title}! {praise_str} {emoji_str}'
       },
       {
         template_str:
-          'Well done {username} for completing {title}! {praise_str} {emoji_str}'
+          '{username} has just conquered {sprint_title}! {praise_str} {emoji_str}'
       },
       {
         template_str:
-          'Awesome work, {username}, on finishing  {title}! {praise_str} {emoji_str}'
+          'Well done {username} for completing {sprint_title}! {praise_str} {emoji_str}'
       },
       {
         template_str:
-          '{username} has achieved {title}! {praise_str} {emoji_str}'
+          'Awesome work, {username}, on finishing  {sprint_title}! {praise_str} {emoji_str}'
+      },
+      {
+        template_str:
+          '{username} has achieved {sprint_title}! {praise_str} {emoji_str}'
       }
     ])
     .returningAll()
@@ -154,22 +176,22 @@ export async function up(db: Kysely<any>) {
       {
         user_id: user[0].id,
         sprint_id: sprint[1].id,
-        message_str: `Awesome work, ${user[0].username}, on finishing  ${sprint[3].title}! ${praise[4].praise_str} ${emoji[5].emoji_str}`
+        message_str: `Awesome work, ${user[0].username}, on finishing  ${sprint[3].sprint_title}! ${praise[4].praise_str} ${emoji[5].emoji_str}`
       },
       {
         user_id: user[0].id,
         sprint_id: sprint[2].id,
-        message_str: `${user[0].username} has achieved ${sprint[2].title}! ${praise[3].praise_str} ${emoji[4].emoji_str}`
+        message_str: `${user[0].username} has achieved ${sprint[2].sprint_title}! ${praise[3].praise_str} ${emoji[4].emoji_str}`
       },
       {
         user_id: user[1].id,
         sprint_id: sprint[2].id,
-        message_str: `Hats off to ${user[3].username} for finishing ${sprint[4].title}! ${praise[5].praise_str} ${emoji[6].emoji_str}`
+        message_str: `Hats off to ${user[3].username} for finishing ${sprint[4].sprint_title}! ${praise[5].praise_str} ${emoji[6].emoji_str}`
       },
       {
         user_id: user[2].id,
         sprint_id: sprint[3].id,
-        message_str: `${user[4].username} has achieved ${sprint[5].title} ${emoji[7].emoji_str}! ${praise[6].praise_str}`
+        message_str: `${user[4].username} has achieved ${sprint[5].sprint_title} ${emoji[7].emoji_str}! ${praise[6].praise_str}`
       }
     ])
     .returningAll()

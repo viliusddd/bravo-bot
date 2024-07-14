@@ -10,8 +10,8 @@ export async function up(db: Kysely<any>) {
   await db.schema
     .createTable('sprint')
     .addColumn('id', 'integer', c => c.notNull().primaryKey().autoIncrement())
-    .addColumn('code', 'text', c => c.notNull().unique())
-    .addColumn('title', 'text', c => c.notNull().unique())
+    .addColumn('sprint_code', 'text', c => c.notNull().unique())
+    .addColumn('sprint_title', 'text', c => c.notNull().unique())
     .execute()
 
   await db.schema

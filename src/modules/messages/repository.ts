@@ -32,12 +32,9 @@ export default (db: Database) => ({
   findAll() {
     return db
       .selectFrom(TABLE)
-      .innerJoin('emoji', 'emoji.id', 'message.emojiId')
       .innerJoin('user', 'user.id', 'message.userId')
       .innerJoin('sprint', 'sprint.id', 'message.sprintId')
-      .innerJoin('praise', 'praise.id', 'message.praiseId')
-      .innerJoin('template', 'template.id', 'message.templateId')
-      .select(['username', 'title', 'praiseStr', 'templateStr', 'emojiStr'])
+      .select(['message.id', 'username', 'sprintCode', 'messageStr'])
       .execute()
   },
 
@@ -52,26 +49,20 @@ export default (db: Database) => ({
   findByUsername(username: string) {
     return db
       .selectFrom(TABLE)
-      .innerJoin('emoji', 'emoji.id', 'message.emojiId')
       .innerJoin('user', 'user.id', 'message.userId')
       .innerJoin('sprint', 'sprint.id', 'message.sprintId')
-      .innerJoin('praise', 'praise.id', 'message.praiseId')
-      .innerJoin('template', 'template.id', 'message.templateId')
-      .select(['username', 'title', 'praiseStr', 'templateStr', 'emojiStr'])
+      .select(['message.id', 'username', 'sprintCode', 'messageStr'])
       .where('username', '=', username)
       .execute()
   },
 
-  findBySprint(sprint: string) {
+  findBySprint(sprintCode: string) {
     return db
       .selectFrom(TABLE)
-      .innerJoin('emoji', 'emoji.id', 'message.emojiId')
       .innerJoin('user', 'user.id', 'message.userId')
       .innerJoin('sprint', 'sprint.id', 'message.sprintId')
-      .innerJoin('praise', 'praise.id', 'message.praiseId')
-      .innerJoin('template', 'template.id', 'message.templateId')
-      .select(['username', 'title', 'praiseStr', 'templateStr', 'emojiStr'])
-      .where('code', '=', sprint)
+      .select(['message.id', 'username', 'sprintCode', 'messageStr'])
+      .where('sprintCode', '=', sprintCode)
       .execute()
   },
 
