@@ -41,16 +41,8 @@ export async function up(db: Kysely<any>) {
     .addColumn('sprint_id', 'integer', c =>
       c.notNull().references('sprint.id').onDelete('cascade')
     )
-    .addColumn('praise_id', 'integer', c =>
-      c.notNull().references('praise.id').onDelete('cascade')
-    )
-    .addColumn('template_id', 'integer', c =>
-      c.notNull().references('template.id').onDelete('cascade')
-    )
-    .addColumn('emoji_id', 'integer', c =>
-      c.notNull().references('emoji.id').onDelete('cascade')
-    )
-    .addColumn('timestamp', 'text', c =>
+    .addColumn('message_str', 'text', c => c.notNull().unique())
+    .addColumn('created_on', 'text', c =>
       c.defaultTo(sql`CURRENT_TIMESTAMP`).notNull()
     )
     .execute()
@@ -62,4 +54,5 @@ export async function down(db: Kysely<any>) {
   await db.schema.dropTable('praise').execute()
   await db.schema.dropTable('template').execute()
   await db.schema.dropTable('message').execute()
+  await db.schema.dropTable('emoji').execute()
 }

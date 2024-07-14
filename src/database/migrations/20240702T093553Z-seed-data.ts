@@ -98,7 +98,7 @@ export async function up(db: Kysely<any>) {
     .returningAll()
     .execute()
 
-  const template: QueryReturn = await db
+  await db
     .insertInto('template')
     .values([
       {
@@ -154,23 +154,22 @@ export async function up(db: Kysely<any>) {
       {
         user_id: user[0].id,
         sprint_id: sprint[1].id,
-        praise_id: praise[2].id,
-        template_id: template[3].id,
-        emoji_id: emoji[4].id
+        message_str: `Awesome work, ${user[0].username}, on finishing  ${sprint[3].title}! ${praise[4].praise_str} ${emoji[5].emoji_str}`
+      },
+      {
+        user_id: user[0].id,
+        sprint_id: sprint[2].id,
+        message_str: `${user[0].username} has achieved ${sprint[2].title}! ${praise[3].praise_str} ${emoji[4].emoji_str}`
       },
       {
         user_id: user[1].id,
         sprint_id: sprint[2].id,
-        praise_id: praise[3].id,
-        template_id: template[4].id,
-        emoji_id: emoji[5].id
+        message_str: `Hats off to ${user[3].username} for finishing ${sprint[4].title}! ${praise[5].praise_str} ${emoji[6].emoji_str}`
       },
       {
         user_id: user[2].id,
         sprint_id: sprint[3].id,
-        praise_id: praise[4].id,
-        template_id: template[5].id,
-        emoji_id: emoji[6].id
+        message_str: `${user[4].username} has achieved ${sprint[5].title} ${emoji[7].emoji_str}! ${praise[6].praise_str}`
       }
     ])
     .returningAll()
@@ -209,5 +208,5 @@ export async function down(db: Kysely<any>) {
     .where('id', 'in', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
     .execute()
 
-  await db.deleteFrom('message').where('id', 'in', [1, 2, 3]).execute()
+  await db.deleteFrom('message').where('id', 'in', [1, 2, 3, 4]).execute()
 }

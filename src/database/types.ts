@@ -11,12 +11,10 @@ export interface Emoji {
 }
 
 export interface Message {
-  emojiId: number
+  createdOn: Generated<string>
   id: Generated<number>
-  praiseId: number
+  messageStr: string
   sprintId: number
-  templateId: number
-  timestamp: Generated<string>
   userId: number
 }
 

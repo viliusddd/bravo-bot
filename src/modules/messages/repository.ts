@@ -59,7 +59,7 @@ export default (db: Database) => ({
       .innerJoin('template', 'template.id', 'message.templateId')
       .select(['username', 'title', 'praiseStr', 'templateStr', 'emojiStr'])
       .where('username', '=', username)
-      .executeTakeFirst()
+      .execute()
   },
 
   findBySprint(sprint: string) {
@@ -72,7 +72,7 @@ export default (db: Database) => ({
       .innerJoin('template', 'template.id', 'message.templateId')
       .select(['username', 'title', 'praiseStr', 'templateStr', 'emojiStr'])
       .where('code', '=', sprint)
-      .executeTakeFirst()
+      .execute()
   },
 
   async create(record: RowInsert): Promise<RowSelect | undefined> {
