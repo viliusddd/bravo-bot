@@ -5,13 +5,12 @@ import type {Template} from '@/database'
 type Record = Template
 const schema = z.object({
   id: z.coerce.number().int().positive(),
-  // templateStr: z.string().min(10).max(500)
   templateStr: z
     .string()
     .min(10)
     .max(500)
     .includes('{username}')
-    .includes('{title}')
+    .includes('{sprint_title}')
     .includes('{praise_str}')
     .includes('{emoji_str}')
 })
