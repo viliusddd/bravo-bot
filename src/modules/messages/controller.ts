@@ -8,6 +8,7 @@ import * as schema from './schema'
 import {MessageNotFound} from './errors'
 import {SprintNotFound} from '../sprints/errors'
 import {UserNotFound} from '../users/errors'
+import {createRec} from './services'
 
 // interface TypedRequestBody<T> extends Express.Request {
 //   body: T
@@ -44,8 +45,7 @@ export default (db: Database) => {
     .post(
       jsonRoute(async (req: Request) => {
         const {body} = req
-        console.log(body)
-        return messages.create(body)
+        return createRec(db, body)
       })
     )
 
@@ -55,17 +55,6 @@ export default (db: Database) => {
       jsonRoute(async (req: Request) => {
         const id = schema.parseId(req.params.id)
         const record = await messages.findById(id)
-
-        if (!record) throw new MessageNotFound()
-        return record
-      })
-    )
-    .patch(
-      //! needs fixing
-      jsonRoute(async (req: Request) => {
-        const id = schema.parseId(req.params.id)
-        const bodyPatch = schema.parseUpdateable(req.body)
-        const record = await messages.update(id, bodyPatch)
 
         if (!record) throw new MessageNotFound()
         return record
