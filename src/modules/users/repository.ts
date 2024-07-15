@@ -38,6 +38,14 @@ export default (db: Database) => ({
       .executeTakeFirst()
   },
 
+  findByUsername(username: string): Promise<RowSelect | undefined> {
+    return db
+      .selectFrom(TABLE)
+      .select(keys)
+      .where('username', '=', username)
+      .executeTakeFirst()
+  },
+
   create(record: RowInsert): Promise<RowSelect | undefined> {
     return db
       .insertInto(TABLE)

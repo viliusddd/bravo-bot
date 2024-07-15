@@ -19,8 +19,8 @@ describe('create', () => {
   it('should create an sprint (explicitly listing all fields)', async () => {
     // ACT (When we call...)
     const sprint = await repository.create({
-      title: 'First Steps Into Programming with Python',
-      code: 'WD-1.1.5'
+      sprintTitle: 'First Steps Into Programming with Python',
+      sprintCode: 'WD-1.1.5'
     })
 
     // ASSERT (Then we should get...)
@@ -29,8 +29,8 @@ describe('create', () => {
       // any number is fine, we might want to check that it is an integer
       // but this is good enough to drive our development
       id: expect.any(Number),
-      title: 'First Steps Into Programming with Python',
-      code: 'WD-1.1.5'
+      sprintTitle: 'First Steps Into Programming with Python',
+      sprintCode: 'WD-1.1.5'
     })
 
     // checking directly in the database
@@ -57,12 +57,12 @@ describe('findAll', () => {
     // ARRANGE (Given that we have the following records in the database...)
     await createSprints([
       fakeSprint({
-        code: 'WD-1.1.5',
-        title: 'First Steps Into Programming with Python'
+        sprintCode: 'WD-1.1.5',
+        sprintTitle: 'First Steps Into Programming with Python'
       }),
       fakeSprint({
-        code: 'WD-3.3.5',
-        title: 'Full-stack Fundamentals'
+        sprintCode: 'WD-3.3.5',
+        sprintTitle: 'Full-stack Fundamentals'
       })
     ])
 
@@ -73,12 +73,15 @@ describe('findAll', () => {
     expect(sprints).toHaveLength(2)
     expect(sprints[0]).toEqual(
       sprintMatcher({
-        code: 'WD-1.1.5',
-        title: 'First Steps Into Programming with Python'
+        sprintCode: 'WD-1.1.5',
+        sprintTitle: 'First Steps Into Programming with Python'
       })
     )
     expect(sprints[1]).toEqual(
-      sprintMatcher({code: 'WD-3.3.5', title: 'Full-stack Fundamentals'})
+      sprintMatcher({
+        sprintCode: 'WD-3.3.5',
+        sprintTitle: 'Full-stack Fundamentals'
+      })
     )
   })
 })
@@ -115,13 +118,13 @@ describe('update', () => {
 
     // ACT (When we call...)
     const updatedSprint = await repository.update(sprint.id, {
-      title: 'Updated sprint'
+      sprintTitle: 'Updated sprint'
     })
 
     // ASSERT (Then we should get...)
     expect(updatedSprint).toMatchObject(
       sprintMatcher({
-        title: 'Updated sprint'
+        sprintTitle: 'Updated sprint'
       })
     )
   })
@@ -140,7 +143,7 @@ describe('update', () => {
   it('should return undefined if sprint is not found', async () => {
     // ACT (When we call...)
     const updatedSprint = await repository.update(999, {
-      title: 'Updated sprint'
+      sprintTitle: 'Updated sprint'
     })
 
     // We could also opt for throwing an error here, but this is a design decision

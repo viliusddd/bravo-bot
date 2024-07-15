@@ -1,22 +1,20 @@
 import {z} from 'zod'
-import type {Sprint} from '@/database'
+import type {Message} from '@/database'
 
 // validation schema
-type Record = Sprint
+type Record = Message
 const schema = z.object({
-  // positive integer
   id: z.coerce.number().int().positive(),
-
-  // ~100 words, no empty strings
-  sprintTitle: z.string().min(1).max(500),
-
-  // ~16K words, no empty strings
-  sprintCode: z.string().min(1).max(100000)
+  userId: z.coerce.number().int().positive(),
+  sprintId: z.coerce.number().int().positive(),
+  messageStr: z.coerce.string(),
+  createdOn: z.coerce.string().datetime()
 })
 
 // schema version for inserting new records
 const insertable = schema.omit({
-  id: true
+  id: true,
+  createdOn: true
 })
 
 // schema version for updating existing records

@@ -10,45 +10,45 @@ it('parses a valid record', () => {
   expect(parse(record)).toEqual(record)
 })
 
-it('throws an error due to empty/missing title (concrete)', () => {
+it('throws an error due to empty/missing sprintTitle (concrete)', () => {
   // ARRANGE
   const sprintWithoutTitle = {
     id: 52,
-    code: 'WD-1.3.4'
+    sprintCode: 'WD-1.3.4'
   }
   const sprintEmptyTitle = {
     id: 52,
-    title: '',
-    code: 'WD-1.3.4'
+    sprintTitle: '',
+    sprintCode: 'WD-1.3.4'
   }
 
   // ACT & ASSERT
   // expect our function to throw an error that
-  // mentions an issue with the title
-  expect(() => parse(sprintWithoutTitle)).toThrow(/title/i)
-  expect(() => parse(sprintEmptyTitle)).toThrow(/title/i)
+  // mentions an issue with the sprintTitle
+  expect(() => parse(sprintWithoutTitle)).toThrow(/sprintTitle/i)
+  expect(() => parse(sprintEmptyTitle)).toThrow(/sprintTitle/i)
 })
 
 // a more generic vesion of the above test, which makes
 // no assumptions about other properties
-it('throws an error due to empty/missing title (generic)', () => {
-  const sprintWithoutTitle = omit(['title'], fakeSprintFull())
+it('throws an error due to empty/missing sprintTitle (generic)', () => {
+  const sprintWithoutTitle = omit(['sprintTitle'], fakeSprintFull())
   const sprintEmptyTitle = fakeSprintFull({
-    title: ''
+    sprintTitle: ''
   })
 
-  expect(() => parse(sprintWithoutTitle)).toThrow(/title/i)
-  expect(() => parse(sprintEmptyTitle)).toThrow(/title/i)
+  expect(() => parse(sprintWithoutTitle)).toThrow(/sprintTitle/i)
+  expect(() => parse(sprintEmptyTitle)).toThrow(/sprintTitle/i)
 })
 
-it('throws an error due to empty/missing code', () => {
-  const recordWithoutContent = omit(['code'], fakeSprintFull())
+it('throws an error due to empty/missing sprintCode', () => {
+  const recordWithoutContent = omit(['sprintCode'], fakeSprintFull())
   const recordEmpty = fakeSprintFull({
-    code: ''
+    sprintCode: ''
   })
 
-  expect(() => parse(recordWithoutContent)).toThrow(/code/i)
-  expect(() => parse(recordEmpty)).toThrow(/code/i)
+  expect(() => parse(recordWithoutContent)).toThrow(/sprintCode/i)
+  expect(() => parse(recordEmpty)).toThrow(/sprintCode/i)
 })
 
 // every other function is a derivative of parse()

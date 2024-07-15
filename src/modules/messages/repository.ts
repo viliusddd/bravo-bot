@@ -1,32 +1,28 @@
 import 'dotenv/config'
-import SQLite from 'better-sqlite3'
-import {
-  Kysely,
-  KyselyPlugin,
-  CamelCasePlugin,
-  SqliteDialect,
-  Selectable,
-  Insertable,
-  Updateable
-} from 'kysely'
-import type {User, Message, Database, DB} from '@/database'
-import {randFromArray} from './utils'
+import {Selectable, Insertable, Updateable} from 'kysely'
 import {keys} from './schema'
+import {randFromArray} from './utils'
+import {templMsg} from './services'
+import emojisRepo from '../emojis/repository'
+import praisesRepo from '../praises/repository'
+import sprintsRepo from '../sprints/repository'
+import templatesRepo from '../templates/repository'
+import type {Message, Database, Emoji, Praise, Template} from '@/database'
+import usersRepo from '../users/repository'
 
-const {DATABASE_URL} = process.env
 const TABLE = 'message'
 
-type TableName = typeof TABLE
 type Row = Message
-type RowWithoutId = Omit<Row, 'id'>
-type RowRelationshipsIds = Pick<
-  Row,
-  'emojiId' | 'praiseId' | 'sprintId' | 'templateId' | 'userId'
->
+type RowWithoutId = Omit<Row, 'id' | 'createdOn'>
 
 type RowInsert = Insertable<RowWithoutId>
 type RowUpdate = Updateable<RowWithoutId>
 type RowSelect = Selectable<Row>
+
+type MessageRow = {
+  username: string
+  sprintCode: string
+}
 
 export default (db: Database) => ({
   findAll() {
@@ -66,12 +62,42 @@ export default (db: Database) => ({
       .execute()
   },
 
-  async create(record: RowInsert): Promise<RowSelect | undefined> {
-    return db
-      .insertInto(TABLE)
-      .values(record)
-      .returning(keys)
-      .executeTakeFirst()
+  async create(record: MessageRow): Promise<RowInsert | undefined> {
+    const users = usersRepo(db)
+    const sprints = sprintsRepo(db)
+    const templates = templatesRepo(db)
+    const emojis = emojisRepo(db)
+    const praises = praisesRepo(db)
+
+    const user = await users.findByUsername(record.username)
+    const sprint = await sprints.findByCode(record.sprintCode)
+    const templateList: Selectable<Template>[] = await templates.findAll()
+    const emojiList: Selectable<Emoji>[] = await emojis.findAll()
+    const praisesList: Selectable<Praise>[] = await praises.findAll()
+
+    if (!sprint) throw new Error('Referenced sprint does not exist')
+
+    const {templateStr} = randFromArray(templateList)
+    const templateKeys = {
+      username: record.username,
+      sprintTitle: sprint.sprintTitle,
+      emojiStr: randFromArray(emojiList).emojiStr,
+      praiseStr: randFromArray(praisesList).praiseStr
+    }
+
+    const messageStr = templMsg(templateStr, templateKeys)
+
+    if (user && sprint)
+      return db
+        .insertInto(TABLE)
+        .values({
+          userId: user.id,
+          sprintId: sprint.id,
+          messageStr
+        })
+        .returning(keys)
+        .executeTakeFirst()
+    throw new Error('tmp err')
   },
 
   async update(id: number, partial: RowUpdate): Promise<RowSelect | undefined> {
@@ -92,74 +118,5 @@ export default (db: Database) => ({
       .where('id', '=', id)
       .returning(keys)
       .executeTakeFirst()
-  },
-
-  /** Enforce that provided relationships reference existing keys. */
-  async assertRelationshipsExist(
-    // db: Kysely<DB>,
-    record: Partial<RowRelationshipsIds>
-  ) {
-    const {emojiId, praiseId, sprintId, templateId, userId} = record
-
-    // we would perform both checks in a single Promise.all
-    if (emojiId) {
-      const emoji = await db
-        .selectFrom('emoji')
-        .select('id')
-        .where('id', '=', emojiId)
-        .executeTakeFirst()
-
-      if (!emoji) {
-        throw new Error('Referenced emoji does not exist')
-      }
-    }
-
-    if (praiseId) {
-      const praise = await db
-        .selectFrom('praise')
-        .select('id')
-        .where('id', '=', praiseId)
-        .executeTakeFirst()
-
-      if (!praise) {
-        throw new Error('Referenced praise does not exist')
-      }
-    }
-
-    if (sprintId) {
-      const sprint = await db
-        .selectFrom('sprint')
-        .select('id')
-        .where('id', '=', sprintId)
-        .executeTakeFirst()
-
-      if (!sprint) {
-        throw new Error('Referenced sprint does not exist')
-      }
-    }
-
-    if (templateId) {
-      const template = await db
-        .selectFrom('template')
-        .select('id')
-        .where('id', '=', templateId)
-        .executeTakeFirst()
-
-      if (!template) {
-        throw new Error('Referenced template does not exist')
-      }
-    }
-
-    if (userId) {
-      const user = await db
-        .selectFrom('user')
-        .select('id')
-        .where('id', '=', userId)
-        .executeTakeFirst()
-
-      if (!user) {
-        throw new Error('Referenced user does not exist')
-      }
-    }
   }
 })

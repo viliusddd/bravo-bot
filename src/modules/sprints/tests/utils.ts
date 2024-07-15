@@ -8,8 +8,8 @@ import type {Sprint} from '@/database'
 export const fakeSprint = (
   overrides: Partial<Insertable<Sprint>> = {}
 ): Insertable<Sprint> => ({
-  title: 'Object Oriented Programming',
-  code: 'WD-1.3.4',
+  sprintTitle: 'Object Oriented Programming',
+  sprintCode: 'WD-1.3.4',
   ...overrides
 })
 
