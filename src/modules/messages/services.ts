@@ -34,9 +34,18 @@ export async function createRec(
   const templateList: Selectable<Template>[] = await templates.findAll()
   const emojiList: Selectable<Emoji>[] = await emojis.findAll()
   const praisesList: Selectable<Praise>[] = await praises.findAll()
+  const messagesList = await messages.findAll()
 
   if (!sprint) throw new Error('Referenced sprint does not exist')
   if (!user) throw new Error('Referenced user does not exist')
+
+  const duplicateEntry = messagesList.some(
+    msg =>
+      msg.username === user.username && msg.sprintCode === sprint.sprintCode
+  )
+
+  if (duplicateEntry)
+    throw new Error('Message with same username & sprintCode  exists.')
 
   const {templateStr} = randFromArray(templateList)
   const templateKeys = {
@@ -48,7 +57,6 @@ export async function createRec(
 
   const messageStr = templMsg(templateStr, templateKeys)
 
-  // if (user && sprint)
   return messages.create({
     userId: user.id,
     sprintId: sprint.id,
