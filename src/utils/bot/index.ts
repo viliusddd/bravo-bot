@@ -1,11 +1,6 @@
 import 'dotenv/config'
 import {Client, GatewayIntentBits, TextChannel} from 'discord.js'
 
-// export interface IBotClient {
-//   start(): void
-//   (message: string, channelId?: string | undefined): Promise<void>
-// }
-
 export default class BotClient extends Client {
   private readonly channelId: string
 
@@ -31,7 +26,7 @@ export default class BotClient extends Client {
     this.login(this.discordToken)
   }
 
-  public async sendMessageToChannel(
+  private async sendMessageToChannel(
     message: string,
     channelId: string = this.channelId
   ) {
