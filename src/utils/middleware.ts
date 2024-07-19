@@ -1,6 +1,7 @@
 import type {Response, Request, NextFunction, RequestHandler} from 'express'
 import {StatusCodes} from 'http-status-codes'
 import MethodNotAllowed from './errors/MethodNotAllowed'
+import BotClient from './bot'
 
 type JsonHandler<T> = (
   req: Request,
@@ -36,3 +37,19 @@ export function unsupportedRoute(
 ) {
   next(new MethodNotAllowed())
 }
+
+type DiscordHandler = (
+  bot: BotClient
+) => (req: Request, res: Response, next: NextFunction) => void
+
+export const discordHandler: DiscordHandler =
+  (bot: BotClient) => (req: Request, res: Response, next: NextFunction) => {
+    bot.sendMessage('from middleware.ts')
+    res.on('finish', () => {
+      res.locals.fromDiscord = 'msg from middleware.ts'
+
+      bot.sendMessage('from middleware2.ts')
+      console.log('from middleware2.ts')
+    })
+    next()
+  }

@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import {type Kysely} from 'kysely'
 import {type DB} from './database'
@@ -8,14 +9,17 @@ import templates from '@/modules/templates/controller'
 import emojis from '@/modules/emojis/controller'
 import sprints from '@/modules/sprints/controller'
 import users from '@/modules/users/controller'
+import type BotClient from './utils/bot'
 
-export default function createApp(db: Kysely<DB>) {
+// export default function createApp(db: Kysely<DB>,) {
+export default function createApp(db: Kysely<DB>, bot: BotClient) {
   const app = express()
+  bot.sendMessage('from app.ts')
 
   app.use(express.json())
 
   app.use('/emojis', emojis(db))
-  app.use('/messages', messages(db))
+  app.use('/messages', messages(db, bot))
   app.use('/praises', praises(db))
   app.use('/sprints', sprints(db))
   app.use('/templates', templates(db))

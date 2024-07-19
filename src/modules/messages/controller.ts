@@ -1,14 +1,15 @@
-import {Router, type Request} from 'express'
+import {Router, type Request, Response} from 'express'
 // import {Send} from 'express-serve-static-core'
 import {StatusCodes} from 'http-status-codes'
 import type {Database} from '@/database'
 import buildRepository from './repository'
-import {jsonRoute} from '@/utils/middleware'
+import {discordHandler, jsonRoute} from '@/utils/middleware'
 import * as schema from './schema'
 import {MessageNotFound} from './errors'
 import {SprintNotFound} from '../sprints/errors'
 import {UserNotFound} from '../users/errors'
 import {createRec} from './services'
+import BotClient from '@/utils/bot'
 
 // interface TypedRequestBody<T> extends Express.Request {
 //   body: T
@@ -17,14 +18,20 @@ import {createRec} from './services'
 //   json: Send<ResBody, this>
 // }
 
-export default (db: Database) => {
+export default (db: Database, bot: BotClient) => {
+  bot.sendMessage('from controller.ts')
   const router = Router()
   const messages = buildRepository(db)
 
   router
     .route('/')
     .get(
-      jsonRoute(async (req: Request) => {
+      discordHandler(bot),
+      jsonRoute(async (req: Request, res: Response) => {
+        // console.log(res.locals.test)
+        // bot.sendMessage(res.locals.fromDiscord)
+        bot.sendMessage('from contrX')
+        console.log('from contrX')
         if (Object.keys(req.query).length === 0) return messages.findAll()
 
         const {username, sprint} = req.query
@@ -45,7 +52,14 @@ export default (db: Database) => {
     .post(
       jsonRoute(async (req: Request) => {
         const {body} = req
-        return createRec(db, body)
+        const record = await createRec(db, body)
+
+        if (record) {
+          console.log('send msg to discord')
+          bot.sendMessage('post')
+          // return record
+        }
+        throw new Error('issue with record')
       })
     )
 

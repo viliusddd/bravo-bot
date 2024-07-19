@@ -3,6 +3,9 @@ declare namespace NodeJS {
     [key: string]: string | undefined
     DATABASE_URL: string
     PORT: string
-    DISCORD_BOT_ID: string
+    DISCORD_TOKEN: string
+    DISCORD_WEBHOOK_URL: string
+    DISCORD_CHANNEL_ID: string
+    GIPHY_API_KEY: string
   }
 }
