@@ -12,6 +12,12 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 1. Clone repo, run `npm i` at project root dir.
 2. Create copy of `.env.example` and rename to `.env`
 3. Add correct values to `.env`
+4. Seed example data to database and update types (optionally):
+
+```sh
+npm run migrate:latest
+npm run gen:types
+```
 
 ## Test functionality
 
