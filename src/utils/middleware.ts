@@ -44,12 +44,11 @@ type DiscordHandler = (
 
 export const discordHandler: DiscordHandler =
   (bot: BotClient) => (req: Request, res: Response, next: NextFunction) => {
-    bot.sendMessage('from middleware.ts')
     res.on('finish', () => {
-      res.locals.fromDiscord = 'msg from middleware.ts'
+      // res.locals.fromDiscord = 'from discordHandler'
 
-      bot.sendMessage('from middleware2.ts')
-      console.log('from middleware2.ts')
+      bot.sendMessage('from discordHandler')
+      console.log('from discordHandler')
     })
     next()
   }

@@ -4,7 +4,6 @@ declare namespace NodeJS {
     DATABASE_URL: string
     PORT: string
     DISCORD_TOKEN: string
-    DISCORD_WEBHOOK_URL: string
     DISCORD_CHANNEL_ID: string
     GIPHY_API_KEY: string
   }

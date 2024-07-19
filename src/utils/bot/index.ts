@@ -40,7 +40,7 @@ export default class BotClient extends Client {
     if (channel) {
       try {
         await channel.send(message)
-        console.log(`Message sent to #${channel.name}`)
+        console.log(`Message sent to #${channel.name}: ${message}`)
       } catch (error) {
         console.error(
           `Failed to send message to channel with id of ${channelId}:`,

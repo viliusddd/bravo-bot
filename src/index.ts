@@ -8,7 +8,6 @@ const bot = new BotClient(
   process.env.DISCORD_TOKEN
 )
 bot.start()
-bot.sendMessage('from index.ts')
 
 const {DATABASE_URL, PORT} = process.env
 
@@ -16,7 +15,6 @@ if (!DATABASE_URL) throw new Error('Provide DATABASE_URL in your env variable.')
 if (!PORT) throw new Error('Provide PORT in your env variable.')
 
 const db = createDB(DATABASE_URL)
-
 const app = createApp(db, bot)
 
 app.listen(PORT, () => {

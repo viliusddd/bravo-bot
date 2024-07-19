@@ -11,10 +11,8 @@ import sprints from '@/modules/sprints/controller'
 import users from '@/modules/users/controller'
 import type BotClient from './utils/bot'
 
-// export default function createApp(db: Kysely<DB>,) {
 export default function createApp(db: Kysely<DB>, bot: BotClient) {
   const app = express()
-  bot.sendMessage('from app.ts')
 
   app.use(express.json())
 

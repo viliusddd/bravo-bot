@@ -1,5 +1,4 @@
 import {Router, type Request, Response} from 'express'
-// import {Send} from 'express-serve-static-core'
 import {StatusCodes} from 'http-status-codes'
 import type {Database} from '@/database'
 import buildRepository from './repository'
@@ -11,13 +10,6 @@ import {UserNotFound} from '../users/errors'
 import {createRec} from './services'
 import BotClient from '@/utils/bot'
 
-// interface TypedRequestBody<T> extends Express.Request {
-//   body: T
-// }
-// interface TypedResponse<ResBody> extends Express.Response {
-//   json: Send<ResBody, this>
-// }
-
 export default (db: Database, bot: BotClient) => {
   bot.sendMessage('from controller.ts')
   const router = Router()
@@ -26,12 +18,7 @@ export default (db: Database, bot: BotClient) => {
   router
     .route('/')
     .get(
-      discordHandler(bot),
       jsonRoute(async (req: Request, res: Response) => {
-        // console.log(res.locals.test)
-        // bot.sendMessage(res.locals.fromDiscord)
-        bot.sendMessage('from contrX')
-        console.log('from contrX')
         if (Object.keys(req.query).length === 0) return messages.findAll()
 
         const {username, sprint} = req.query
@@ -39,7 +26,6 @@ export default (db: Database, bot: BotClient) => {
 
         if (typeof username === 'string') {
           record = await messages.findByUsername(username)
-
           if (!record) throw new UserNotFound()
         } else if (typeof sprint === 'string') {
           record = await messages.findBySprint(sprint)
@@ -50,16 +36,15 @@ export default (db: Database, bot: BotClient) => {
       })
     )
     .post(
+      discordHandler(bot),
       jsonRoute(async (req: Request) => {
         const {body} = req
         const record = await createRec(db, body)
 
         if (record) {
-          console.log('send msg to discord')
-          bot.sendMessage('post')
-          // return record
+          return record
         }
-        throw new Error('issue with record')
+        throw new Error('Issue with record')
       })
     )
 
