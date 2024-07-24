@@ -1,5 +1,4 @@
-import 'dotenv/config'
-import {Client, GatewayIntentBits, TextChannel} from 'discord.js'
+import {Client, Events, GatewayIntentBits, TextChannel} from 'discord.js'
 
 export default class BotClient extends Client {
   private readonly channelId: string
@@ -16,40 +15,33 @@ export default class BotClient extends Client {
     })
     this.channelId = channelId
     this.discordToken = discordToken
+
+    this.start()
   }
 
   public start() {
-    this.once('ready', () => {
-      console.log('Bot is online!')
-      // this.sendMessageToChannel('once msg')
+    this.once(Events.ClientReady, readyClient => {
+      console.log(`Discord bot is ready. Logged in as ${readyClient.user.tag}.`)
     })
     this.login(this.discordToken)
   }
 
-  private async sendMessageToChannel(
+  public async sendMessage(
     message: string,
     channelId: string = this.channelId
   ) {
     const channel = this.channels.cache.get(channelId) as TextChannel
 
-    if (channel) {
-      try {
-        await channel.send(message)
-        console.log(`Message sent to #${channel.name}: ${message}`)
-      } catch (error) {
-        console.error(
-          `Failed to send message to channel with id of ${channelId}:`,
-          error
-        )
-      }
-    } else {
-      console.error('Channel not found')
-    }
-  }
+    if (!channel) console.error('Channel not found')
 
-  public sendMessage(message: string, channelId: string = this.channelId) {
-    this.on('ready', () => {
-      this.sendMessageToChannel(message, channelId)
-    })
+    try {
+      await channel.send(message)
+      console.log(`Message sent to #${channel.name}: ${message}`)
+    } catch (error) {
+      console.error(
+        `Failed to send message to channel with id of ${channelId}:`,
+        error
+      )
+    }
   }
 }

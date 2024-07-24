@@ -7,7 +7,6 @@ const bot = new BotClient(
   process.env.DISCORD_CHANNEL_ID,
   process.env.DISCORD_TOKEN
 )
-bot.start()
 
 const {DATABASE_URL, PORT} = process.env
 

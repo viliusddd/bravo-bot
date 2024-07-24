@@ -46,9 +46,7 @@ export const discordHandler: DiscordHandler =
   (bot: BotClient) => (req: Request, res: Response, next: NextFunction) => {
     res.on('finish', () => {
       // res.locals.fromDiscord = 'from discordHandler'
-
       bot.sendMessage('from discordHandler')
-      console.log('from discordHandler')
     })
     next()
   }

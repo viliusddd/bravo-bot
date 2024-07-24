@@ -11,7 +11,6 @@ import {createRec} from './services'
 import BotClient from '@/utils/bot'
 
 export default (db: Database, bot: BotClient) => {
-  bot.sendMessage('from controller.ts')
   const router = Router()
   const messages = buildRepository(db)
 
