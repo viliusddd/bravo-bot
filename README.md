@@ -9,4 +9,23 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 
 ## Setup
 
-1. To create new Discor Bot, follow [discordjs.guide](https://discordjs.guide/) instrucitons.
+1. Clone repo, `cd` and run `npm i` at project root dir.
+2. Create copy of `.env.example` and rename it to `.env`
+3. Add correct values to `.env`
+4. Seed example data to database and update types (optionally):
+
+```sh
+npm run migrate:latest
+npm run gen:types
+```
+
+## Test functionality
+
+1. Use `POST` metod with `/messages` endpoint for `http://localhost:3000/messages`, use following as body:
+
+```json
+{
+  "username": "vjuodz",
+  "sprintCode": "WD-1.4.4"
+}
+```

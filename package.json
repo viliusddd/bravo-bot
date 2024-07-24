@@ -1,10 +1,10 @@
 {
-  "name": "server",
+  "name": "bravo-bot",
   "version": "0.1.0",
   "author": "Vilius Juodžiukynas",
   "license": "MIT",
   "description": "It's a dynamic Discord bot powered by a REST API that celebrates user achievements by sending personalized congratulatory messages and celebratory GIFs whenever a sprint is completed.",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "start": "tsx src",
@@ -36,6 +36,7 @@
     "express": "^4.19.2",
     "http-status-codes": "^2.3.0",
     "lodash": "^4.17.21",
+    "undici": "^6.19.2",
     "zod": "^3.23.4"
   },
   "devDependencies": {

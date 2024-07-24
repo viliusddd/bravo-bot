@@ -1,30 +1,23 @@
-import {Router, type Request} from 'express'
-// import {Send} from 'express-serve-static-core'
+import {Router, type Request, Response} from 'express'
 import {StatusCodes} from 'http-status-codes'
 import type {Database} from '@/database'
 import buildRepository from './repository'
-import {jsonRoute} from '@/utils/middleware'
+import {discordHandler, jsonRoute} from '@/utils/middleware'
 import * as schema from './schema'
 import {MessageNotFound} from './errors'
 import {SprintNotFound} from '../sprints/errors'
 import {UserNotFound} from '../users/errors'
 import {createRec} from './services'
+import BotClient from '@/utils/bot'
 
-// interface TypedRequestBody<T> extends Express.Request {
-//   body: T
-// }
-// interface TypedResponse<ResBody> extends Express.Response {
-//   json: Send<ResBody, this>
-// }
-
-export default (db: Database) => {
+export default (db: Database, bot: BotClient) => {
   const router = Router()
   const messages = buildRepository(db)
 
   router
     .route('/')
     .get(
-      jsonRoute(async (req: Request) => {
+      jsonRoute(async (req: Request, res: Response) => {
         if (Object.keys(req.query).length === 0) return messages.findAll()
 
         const {username, sprint} = req.query
@@ -32,7 +25,6 @@ export default (db: Database) => {
 
         if (typeof username === 'string') {
           record = await messages.findByUsername(username)
-
           if (!record) throw new UserNotFound()
         } else if (typeof sprint === 'string') {
           record = await messages.findBySprint(sprint)
@@ -43,9 +35,15 @@ export default (db: Database) => {
       })
     )
     .post(
+      discordHandler(bot),
       jsonRoute(async (req: Request) => {
         const {body} = req
-        return createRec(db, body)
+        const record = await createRec(db, body)
+
+        if (record) {
+          return record
+        }
+        throw new Error('Issue with record')
       })
     )
 
