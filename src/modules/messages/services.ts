@@ -1,4 +1,5 @@
 import {Selectable, Insertable} from 'kysely'
+import type BotClient from '@/utils/bot'
 import {snakeToCamel, randFromArray} from './utils'
 import emojisRepo from '../emojis/repository'
 import praisesRepo from '../praises/repository'
@@ -14,14 +15,11 @@ type RowWithoutId = Omit<Row, 'id' | 'createdOn'>
 
 type RowInsert = Insertable<RowWithoutId>
 
-type MessageRow = {
-  username: string
-  sprintCode: string
-}
-
 export async function createRec(
   db: Database,
-  record: MessageRow
+  username: string,
+  sprintCode: string,
+  bot: BotClient
 ): Promise<RowInsert | undefined> {
   const users = usersRepo(db)
   const sprints = sprintsRepo(db)
@@ -30,8 +28,8 @@ export async function createRec(
   const praises = praisesRepo(db)
   const messages = messagesRepo(db)
 
-  const user = await users.findByUsername(record.username)
-  const sprint = await sprints.findByCode(record.sprintCode)
+  const user = await users.findByUsername(username)
+  const sprint = await sprints.findByCode(sprintCode)
   const templateList: Selectable<Template>[] = await templates.findAll()
   const emojiList: Selectable<Emoji>[] = await emojis.findAll()
   const praisesList: Selectable<Praise>[] = await praises.findAll()
@@ -45,12 +43,14 @@ export async function createRec(
       msg.username === user.username && msg.sprintCode === sprint.sprintCode
   )
 
-  if (duplicateEntry)
-    throw new Error('Message with same username & sprintCode  exists.')
+  // if (duplicateEntry)
+  //   throw new Error('Message with same username & sprintCode  exists.')
+
+  const discordUserId = await bot.getUserIdFromNickname(user.username)
 
   const {templateStr} = randFromArray(templateList)
   const templateKeys = {
-    username: record.username,
+    username: discordUserId ? `<@${discordUserId}>` : user.username,
     sprintTitle: sprint.sprintTitle,
     emojiStr: randFromArray(emojiList).emojiStr,
     praiseStr: randFromArray(praisesList).praiseStr

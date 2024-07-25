@@ -37,9 +37,9 @@ export default (db: Database, bot: BotClient) => {
     )
     .post(
       jsonRoute(async (req: Request, res: Response, next: NextFunction) => {
-        const {body} = req
+        const {username, sprintCode} = req.body
 
-        const record = await createRec(db, body)
+        const record = await createRec(db, username, sprintCode, bot)
         if (!record) throw new Error('Issue with record')
 
         res.locals.msg = record.messageStr

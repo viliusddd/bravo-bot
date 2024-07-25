@@ -7,7 +7,12 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 - DB is seeded with data.
 - GH Action for linting, testing and build.
 
-## Setup
+## Discord Setup
+
+1. Enable `GUILD_MEMBERS` intent:
+   1. Ensure your bot has the GUILD_MEMBERS intent enabled in the Discord Developer Portal and in your code.
+
+## Project Setup
 
 1. Clone repo, `cd` and run `npm i` at project root dir.
 2. Create copy of `.env.example` and rename it to `.env`

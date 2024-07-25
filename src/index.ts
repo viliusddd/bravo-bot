@@ -5,6 +5,7 @@ import BotClient from './utils/bot'
 
 const bot = new BotClient(
   process.env.DISCORD_CHANNEL_ID,
+  process.env.DISCORD_GUILD_ID,
   process.env.DISCORD_TOKEN
 )
 

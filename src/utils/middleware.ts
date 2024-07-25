@@ -50,7 +50,7 @@ export const discordHandler: DiscordHandler =
       if (!gifUrl) throw new Error('Gif URL is unavailable.')
 
       bot.sendMessage(res.locals.msg)
-      bot.sendMessage(gifUrl)
+      bot.sendImage(gifUrl)
     })
     next()
   }
