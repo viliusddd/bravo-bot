@@ -1,14 +1,15 @@
-import {Router, type Request, Response} from 'express'
+import {Router} from 'express'
 import {StatusCodes} from 'http-status-codes'
+import type {Request, Response, NextFunction} from 'express'
 import type {Database} from '@/database'
-import buildRepository from './repository'
+import {createRec} from './services'
 import {discordHandler, jsonRoute} from '@/utils/middleware'
-import * as schema from './schema'
 import {MessageNotFound} from './errors'
 import {SprintNotFound} from '../sprints/errors'
 import {UserNotFound} from '../users/errors'
-import {createRec} from './services'
+import * as schema from './schema'
 import BotClient from '@/utils/bot'
+import buildRepository from './repository'
 
 export default (db: Database, bot: BotClient) => {
   const router = Router()
@@ -35,16 +36,19 @@ export default (db: Database, bot: BotClient) => {
       })
     )
     .post(
-      discordHandler(bot),
-      jsonRoute(async (req: Request) => {
+      jsonRoute(async (req: Request, res: Response, next: NextFunction) => {
         const {body} = req
-        const record = await createRec(db, body)
 
-        if (record) {
-          return record
-        }
-        throw new Error('Issue with record')
-      })
+        const record = await createRec(db, body)
+        if (!record) throw new Error('Issue with record')
+
+        res.locals.msg = record.messageStr
+
+        next()
+
+        return record
+      }),
+      discordHandler(bot)
     )
 
   router

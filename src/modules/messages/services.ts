@@ -1,5 +1,4 @@
 import {Selectable, Insertable} from 'kysely'
-import {Client, EmbedBuilder, Events, GatewayIntentBits} from 'discord.js'
 import {snakeToCamel, randFromArray} from './utils'
 import emojisRepo from '../emojis/repository'
 import praisesRepo from '../praises/repository'

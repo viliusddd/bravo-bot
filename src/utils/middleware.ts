@@ -1,7 +1,8 @@
 import type {Response, Request, NextFunction, RequestHandler} from 'express'
 import {StatusCodes} from 'http-status-codes'
+import type BotClient from './bot'
+import getGifUrl from './gif'
 import MethodNotAllowed from './errors/MethodNotAllowed'
-import BotClient from './bot'
 
 type JsonHandler<T> = (
   req: Request,
@@ -44,9 +45,12 @@ type DiscordHandler = (
 
 export const discordHandler: DiscordHandler =
   (bot: BotClient) => (req: Request, res: Response, next: NextFunction) => {
-    res.on('finish', () => {
-      // res.locals.fromDiscord = 'from discordHandler'
-      bot.sendMessage('from discordHandler')
+    res.on('finish', async () => {
+      const gifUrl = await getGifUrl()
+      if (!gifUrl) throw new Error('Gif URL is unavailable.')
+
+      bot.sendMessage(res.locals.msg)
+      bot.sendMessage(gifUrl)
     })
     next()
   }

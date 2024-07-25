@@ -4,11 +4,8 @@ import type {User} from '@/database'
 // validation schema
 type Record = User
 const schema = z.object({
-  // positive integer
   id: z.coerce.number().int().positive(),
-
-  // ~100 words, no empty strings
-  username: z.string().length(6)
+  username: z.string().length(2)
 })
 
 // schema version for inserting new records
