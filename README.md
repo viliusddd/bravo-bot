@@ -34,3 +34,7 @@ npm run gen:types
   "sprintCode": "WD-1.4.4"
 }
 ```
+
+## Link to Peer-programming exercise repository
+
+- https://github.com/viliusddd/3.2.4
