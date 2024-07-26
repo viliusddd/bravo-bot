@@ -10,7 +10,8 @@ export async function up(db: Kysely<any>) {
       {username: 'ddidzi'},
       {username: 'rbeniu'},
       {username: 'augriga'},
-      {username: 'jiylee'}
+      {username: 'jiylee'},
+      {username: 'VJ'}
     ])
     .returningAll()
     .execute()
@@ -206,7 +207,8 @@ export async function down(db: Kysely<any>) {
       'ddidzi',
       'rbeniu',
       'augriga',
-      'jiylee'
+      'jiylee',
+      'VJ'
     ])
     .execute()
 

@@ -5,7 +5,7 @@ import type {User} from '@/database'
 type Record = User
 const schema = z.object({
   id: z.coerce.number().int().positive(),
-  username: z.string().length(2)
+  username: z.string().min(2).max(15)
 })
 
 // schema version for inserting new records
