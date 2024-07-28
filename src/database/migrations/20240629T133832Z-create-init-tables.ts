@@ -1,4 +1,4 @@
-import {type Kysely, sql} from 'kysely'
+import {type Kysely} from 'kysely'
 
 export async function up(db: Kysely<any>) {
   await db.schema
@@ -42,8 +42,8 @@ export async function up(db: Kysely<any>) {
       c.notNull().references('sprint.id').onDelete('cascade')
     )
     .addColumn('message_str', 'text', c => c.notNull().unique())
-    .addColumn('created_on', 'text', c =>
-      c.defaultTo(sql`CURRENT_TIMESTAMP`).notNull()
+    .addColumn('created_on', 'timestamptz', c =>
+      c.defaultTo(new Date().toISOString()).notNull()
     )
     .execute()
 }

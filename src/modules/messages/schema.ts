@@ -7,7 +7,7 @@ const schema = z.object({
   id: z.coerce.number().int().positive(),
   userId: z.coerce.number().int().positive(),
   sprintId: z.coerce.number().int().positive(),
-  messageStr: z.coerce.string(),
+  messageStr: z.coerce.string().min(10).max(3000),
   createdOn: z.coerce.string().datetime()
 })
 
