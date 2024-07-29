@@ -3,13 +3,13 @@ import {StatusCodes} from 'http-status-codes'
 import type {Request, Response, NextFunction} from 'express'
 import type {Database} from '@/database'
 import {createRec} from './services'
-import {discordHandler, jsonRoute} from '@/utils/middleware'
+import {discordHandler, jsonRoute, unsupportedRoute} from '@/utils/middleware'
 import {MessageNotFound} from './errors'
 import {SprintNotFound} from '../sprints/errors'
 import {UserNotFound} from '../users/errors'
-import * as schema from './schema'
 import BotClient from '@/utils/bot'
 import buildRepository from './repository'
+import * as schema from './schema'
 
 export default (db: Database, bot: BotClient) => {
   const router = Router()
@@ -18,7 +18,7 @@ export default (db: Database, bot: BotClient) => {
   router
     .route('/')
     .get(
-      jsonRoute(async (req: Request, res: Response) => {
+      jsonRoute(async (req: Request) => {
         if (Object.keys(req.query).length === 0) return messages.findAll()
 
         const {username, sprint} = req.query
@@ -47,7 +47,7 @@ export default (db: Database, bot: BotClient) => {
         next()
 
         return record
-      }),
+      }, StatusCodes.CREATED),
       discordHandler(bot)
     )
 
@@ -70,6 +70,7 @@ export default (db: Database, bot: BotClient) => {
         if (!record) throw new MessageNotFound()
       }, StatusCodes.NO_CONTENT)
     )
+    .patch(unsupportedRoute)
 
   return router
 }

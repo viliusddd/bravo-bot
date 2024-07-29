@@ -1,28 +1,36 @@
-import 'dotenv/config'
-import {Selectable, Insertable, Updateable} from 'kysely'
+import type {
+  ExpressionOrFactory,
+  Insertable,
+  Selectable,
+  SqlBool,
+  Updateable
+} from 'kysely'
 import {keys} from './schema'
-import type {Message, Database} from '@/database'
+import type {Message, Database, DB} from '@/database'
 
+// model-specific code
 const TABLE = 'message'
-
+type TableName = typeof TABLE
 type Row = Message
-type RowWithoutId = Omit<Row, 'id' | 'createdOn'>
-
+type RowWithoutId = Omit<Row, 'id'>
 type RowInsert = Insertable<RowWithoutId>
 type RowUpdate = Updateable<RowWithoutId>
 type RowSelect = Selectable<Row>
 
+// in tests, we provide an in-memory SQLite database
+// generic code that could be generalized further
 export default (db: Database) => ({
-  findAll() {
-    return db
-      .selectFrom(TABLE)
-      .innerJoin('user', 'user.id', 'message.userId')
-      .innerJoin('sprint', 'sprint.id', 'message.sprintId')
-      .select(['message.id', 'username', 'sprintCode', 'messageStr'])
-      .execute()
+  findAll(): Promise<RowSelect[]> {
+    return db.selectFrom(TABLE).select(keys).execute()
   },
 
-  findById(id: number) {
+  find(
+    expression: ExpressionOrFactory<DB, TableName, SqlBool>
+  ): Promise<RowSelect[]> {
+    return db.selectFrom(TABLE).select(keys).where(expression).execute()
+  },
+
+  findById(id: number): Promise<RowSelect | undefined> {
     return db
       .selectFrom(TABLE)
       .select(keys)
@@ -50,7 +58,7 @@ export default (db: Database) => ({
       .execute()
   },
 
-  async create(record: RowInsert): Promise<RowSelect | undefined> {
+  create(record: RowInsert): Promise<RowSelect | undefined> {
     return db
       .insertInto(TABLE)
       .values(record)
@@ -58,10 +66,11 @@ export default (db: Database) => ({
       .executeTakeFirst()
   },
 
-  async update(id: number, partial: RowUpdate): Promise<RowSelect | undefined> {
+  update(id: number, partial: RowUpdate): Promise<RowSelect | undefined> {
     if (Object.keys(partial).length === 0) {
       return this.findById(id)
     }
+
     return db
       .updateTable(TABLE)
       .set(partial)
@@ -70,7 +79,7 @@ export default (db: Database) => ({
       .executeTakeFirst()
   },
 
-  async remove(id: number) {
+  remove(id: number) {
     return db
       .deleteFrom(TABLE)
       .where('id', '=', id)

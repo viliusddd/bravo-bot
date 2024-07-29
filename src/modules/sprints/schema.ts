@@ -4,20 +4,13 @@ import type {Sprint} from '@/database'
 // validation schema
 type Record = Sprint
 const schema = z.object({
-  // positive integer
   id: z.coerce.number().int().positive(),
-
-  // ~100 words, no empty strings
   sprintTitle: z.string().min(1).max(500),
-
-  // ~16K words, no empty strings
   sprintCode: z.string().min(1).max(100000)
 })
 
 // schema version for inserting new records
-const insertable = schema.omit({
-  id: true
-})
+const insertable = schema.omit({id: true})
 
 // schema version for updating existing records
 const updateable = insertable.partial()

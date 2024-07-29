@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import {Selectable, Insertable} from 'kysely'
 import type BotClient from '@/utils/bot'
 import {snakeToCamel, randFromArray} from './utils'
@@ -8,7 +9,8 @@ import templatesRepo from '../templates/repository'
 import type {Database, Emoji, Message, Praise, Template} from '@/database'
 import usersRepo from '../users/repository'
 import messagesRepo from './repository'
-import 'dotenv/config'
+import * as userSchema from '@/modules/users/schema'
+import * as sprintSchema from '@/modules/sprints/schema'
 
 type Row = Message
 type RowWithoutId = Omit<Row, 'id' | 'createdOn'>
@@ -28,23 +30,18 @@ export async function createRec(
   const praises = praisesRepo(db)
   const messages = messagesRepo(db)
 
-  const user = await users.findByUsername(username)
-  const sprint = await sprints.findByCode(sprintCode)
+  const user = userSchema.parse(await users.findByUsername(username))
+  const sprint = sprintSchema.parse(await sprints.findByCode(sprintCode))
   const templateList: Selectable<Template>[] = await templates.findAll()
   const emojiList: Selectable<Emoji>[] = await emojis.findAll()
   const praisesList: Selectable<Praise>[] = await praises.findAll()
   const messagesList = await messages.findAll()
 
-  if (!sprint) throw new Error('Referenced sprint does not exist')
-  if (!user) throw new Error('Referenced user does not exist')
-
   const duplicateEntry = messagesList.some(
-    msg =>
-      msg.username === user.username && msg.sprintCode === sprint.sprintCode
+    msg => msg.userId === user.id && msg.sprintId === sprint.id
   )
-
-  // if (duplicateEntry)
-  //   throw new Error('Message with same username & sprintCode  exists.')
+  if (duplicateEntry)
+    throw new Error('Message with same username & sprintCode  exists.')
 
   const discordUserId = await bot.getUserIdFromNickname(user.username)
 
