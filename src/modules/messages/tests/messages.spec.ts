@@ -1,19 +1,37 @@
-import supertest from 'supertest'
-import createTestDatabase from '@tests/utils/createTestDatabase'
+import 'dotenv/config'
 import {createFor} from '@tests/utils/records'
-import {omit} from 'lodash/fp'
-import {fakeMessage, messageMatcher} from './utils'
+import createTestDatabase from '@tests/utils/createTestDatabase'
+import supertest from 'supertest'
+import {apiMessageMatcher, fakeMessage, messageMatcher} from './utils'
+import {fakeEmoji} from '@/modules/emojis/tests/utils'
+import {fakePraise} from '@/modules/praises/tests/utils'
+import {fakeSprint} from '@/modules/sprints/tests/utils'
+import {fakeTemplate} from '@/modules/templates/tests/utils'
+import {fakeUser} from '@/modules/users/tests/utils'
+import BotClient from '@/utils/bot'
 import createApp from '@/app'
 
+const bot = new BotClient(
+  process.env.DISCORD_CHANNEL_ID,
+  process.env.DISCORD_GUILD_ID,
+  process.env.DISCORD_TOKEN
+)
 const db = await createTestDatabase()
-const app = createApp(db)
+const app = createApp(db, bot)
 
 // builds helper function to create messages
+const createEmojis = createFor(db, 'emoji')
 const createMessages = createFor(db, 'message')
+const createPraises = createFor(db, 'praise')
+const createSprints = createFor(db, 'sprint')
+const createTemplates = createFor(db, 'template')
+const createUsers = createFor(db, 'user')
 
 afterEach(async () => {
   // clearing the tested table after each test
   await db.deleteFrom('message').execute()
+  await db.deleteFrom('sprint').execute()
+  await db.deleteFrom('user').execute()
 })
 
 // close the database connection after all tests
@@ -37,16 +55,18 @@ describe('GET', () => {
 
   it('should return a list of existing messages', async () => {
     // ARRANGE (Given that we have...)
+    const users = await createUsers(fakeUser())
+    const sprints = await createSprints(fakeSprint())
+    const bodyOverride = {userId: users[0].id, sprintId: sprints[0].id}
+    // const body = {userId: user!.id, sprintId: sprint!.id}
     await createMessages([
       // we have a function that spits out a generic fake message
-      fakeMessage(),
+      fakeMessage(bodyOverride),
 
       // we generate a slightly different message
       // in this function call we provide what should
       // be different from the our default generic message
-      fakeMessage({
-        messageStr: 'You did really well 1!'
-      })
+      fakeMessage({...bodyOverride, messageStr: 'You did really well !!'})
     ])
 
     // ACT (When we request...)
@@ -56,7 +76,7 @@ describe('GET', () => {
     expect(body).toEqual([
       messageMatcher(),
       messageMatcher({
-        messageStr: 'You did really well 1!'
+        messageStr: 'You did really well !!'
       })
     ])
 
@@ -94,122 +114,108 @@ describe('GET /:id', () => {
 
   it('should return an message if it exists', async () => {
     // ARRANGE (Given that we have...)
-    await createMessages([
-      fakeMessage({
-        id: 1371
-      })
-    ])
+    const users = await createUsers(fakeUser())
+    const sprints = await createSprints(fakeSprint())
+    const bodyOverride = {
+      id: 1371,
+      userId: users[0].id,
+      sprintId: sprints[0].id
+    }
+
+    await createMessages([fakeMessage(bodyOverride)])
 
     // ACT (When we request...)
     const {body} = await supertest(app).get('/messages/1371').expect(200)
 
     // ASSERT (Then we should get...)
-    expect(body).toEqual(
-      messageMatcher({
-        id: 1371
-      })
-    )
+    expect(body).toEqual(messageMatcher(bodyOverride))
   })
 })
 
 describe('POST', () => {
-  it('should return 400 if messageStr is missing', async () => {
+  it('should return 400 if username is missing', async () => {
     // ACT (When we request...)
+    const sprints = await createSprints(fakeSprint())
+
     const {body} = await supertest(app)
       .post('/messages')
-      .send(omit(['messageStr'], fakeMessage({})))
+      .send({sprintCode: sprints[0].sprintCode})
       .expect(400)
 
     // ASSERT (Then we should get...)
-    expect(body.error.message).toMatch(/messageStr/i)
+    expect(body.error.message).toMatch(/message/i)
   })
 
-  it('does not allow to create a message with empty messageStr', async () => {
+  it('should return 400 if sprintCode is missing', async () => {
+    // ACT (When we request...)
+    const users = await createUsers(fakeUser())
+
     const {body} = await supertest(app)
       .post('/messages')
-      .send(fakeMessage({messageStr: ''}))
+      .send({username: users[0].username})
       .expect(400)
 
-    expect(body.error.message).toMatch(/messageStr/i)
+    // ASSERT (Then we should get...)
+    expect(body.error.message).toMatch(/message/i)
+  })
+
+  it('does not allow to create a message with empty username', async () => {
+    const sprints = await createSprints(fakeSprint())
+    const {body} = await supertest(app)
+      .post('/messages')
+      .send({
+        username: '',
+        sprintCode: sprints[0].sprintCode
+      })
+      .expect(400)
+
+    expect(body.error.message).toMatch(/message/i)
   })
 
   it('should return 201 and created message record', async () => {
+    await createEmojis(fakeEmoji())
+    await createTemplates(fakeTemplate())
+    await createPraises(fakePraise())
+    const users = await createUsers(fakeUser())
+    const sprints = await createSprints(fakeSprint())
+
     const {body} = await supertest(app)
       .post('/messages')
-      .send(fakeMessage())
+      .send({
+        username: users[0].username,
+        sprintCode: sprints[0].sprintCode
+      })
       .expect(201)
 
-    expect(body).toEqual(messageMatcher())
-  })
-})
-
-describe('PATCH /:id', () => {
-  it('returns 404 if message does not exist', async () => {
-    const {body} = await supertest(app)
-      .patch('/messages/123456')
-      .send(fakeMessage())
-      .expect(404)
-
-    expect(body.error.message).toMatch(/not found/i)
-  })
-
-  it('allows partial updates', async () => {
-    const id = 137234
-    await createMessages([
-      fakeMessage({
-        id
-      })
-    ])
-
-    const {body} = await supertest(app)
-      .patch(`/messages/${137234}`)
-      .send({messageStr: 'Job well done!'})
-      .expect(200)
-
-    expect(body).toEqual(
-      messageMatcher({
-        id,
-        messageStr: 'Job well done!'
-      })
-    )
-  })
-
-  it('persists changes', async () => {
-    const id = 41512
-    await createMessages([fakeMessage({id})])
-
-    await supertest(app)
-      .patch(`/messages/${id}`)
-      .send({messageStr: 'Job well done!'})
-      .expect(200)
-
-    const {body} = await supertest(app).get('/messages/41512').expect(200)
-
-    expect(body).toEqual(
-      messageMatcher({
-        messageStr: 'Job well done!'
-      })
-    )
+    expect(body).toEqual(apiMessageMatcher())
   })
 })
 
 describe('DELETE', () => {
   it('returns 404 if message does not exist', async () => {
-    const {body} = await supertest(app).delete('/messages/123456').expect(404)
+    const {body} = await supertest(app).delete('/messages/12345678').expect(404)
 
     expect(body.error.message).toMatch(/not found/i)
   })
 
   it('returns 204 on successfull deletion', async () => {
-    const id = 123
-    await createMessages([fakeMessage({id})])
+    const users = await createUsers(fakeUser())
+    const sprints = await createSprints(fakeSprint())
+
+    await createMessages([
+      fakeMessage({id: 123, userId: users[0].id, sprintId: sprints[0].id})
+    ])
 
     await supertest(app).delete('/messages/123').expect(204)
   })
 
   it('returns no body content on success', async () => {
-    const id = 123
-    await createMessages([fakeMessage({id})])
+    const users = await createUsers(fakeUser())
+    const sprints = await createSprints(fakeSprint())
+
+    await createMessages([
+      fakeMessage({id: 123, userId: users[0].id, sprintId: sprints[0].id})
+    ])
 
     const record = await supertest(app).delete('/messages/123')
     expect(record.body).toEqual({})

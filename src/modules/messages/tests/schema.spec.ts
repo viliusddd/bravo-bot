@@ -12,13 +12,15 @@ it('parses a valid record', () => {
 
 it('throws an error due to empty/missing messageStr (concrete)', () => {
   // ARRANGE
-  const messageWithoutStr = {
-    id: 52
+  const body = {
+    id: 1,
+    userId: 2,
+    sprintId: 3,
+    createdOn: '2024-07-26T12:42:51.808Z'
   }
-  const messageEmptyStr = {
-    id: 52,
-    messageStr: ''
-  }
+
+  const messageWithoutStr = {...body}
+  const messageEmptyStr = {...body, messageStr: ''}
 
   // ACT & ASSERT
   // expect our function to throw an error that

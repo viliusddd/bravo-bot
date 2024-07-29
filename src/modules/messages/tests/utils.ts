@@ -9,9 +9,8 @@ export const fakeMessage = (
   overrides: Partial<Insertable<Message>> = {}
 ): Insertable<Message> => ({
   userId: 1,
-  sprintId: 2,
-  messageStr:
-    'vjuodz has achieved Intermediate Programming with Python 🎉🎉🎉! You are an inspiration to us all with your incredible achievement. Congratulations and keep reaching for the stars!',
+  sprintId: 1,
+  messageStr: 'Foo Bar Baz Message!',
   ...overrides
 })
 
@@ -23,13 +22,26 @@ export const messageMatcher = (
   overrides: Partial<Insertable<Message>> = {}
 ) => ({
   id: expect.any(Number),
+  createdOn: expect.any(String),
   ...overrides, // for id
   ...fakeMessage(overrides)
+})
+
+export const apiMessageMatcher = (
+  overrides: Partial<Insertable<Message>> = {}
+) => ({
+  id: expect.any(Number),
+  sprintId: expect.any(Number),
+  userId: expect.any(Number),
+  messageStr: expect.any(String),
+  createdOn: expect.any(String),
+  ...overrides // for id
 })
 
 export const fakeMessageFull = (
   overrides: Partial<Insertable<Message>> = {}
 ) => ({
-  id: 2,
+  id: 1,
+  createdOn: '2024-07-27T08:33:52.465Z',
   ...fakeMessage(overrides)
 })
