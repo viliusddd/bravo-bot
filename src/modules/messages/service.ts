@@ -11,6 +11,7 @@ import usersRepo from '../users/repository'
 import messagesRepo from './repository'
 import * as userSchema from '@/modules/users/schema'
 import * as sprintSchema from '@/modules/sprints/schema'
+import {IGNORE_DUPLICATE_MSG} from '@/config'
 
 type Row = Message
 type RowWithoutId = Omit<Row, 'id' | 'createdOn'>
@@ -38,9 +39,9 @@ export async function createRec(
   const messagesList = await messages.findAll()
 
   const duplicateEntry = messagesList.some(
-    msg => msg.userId === user.id && msg.sprintId === sprint.id
+    entry => entry.userId === user.id && entry.sprintId === sprint.id
   )
-  if (duplicateEntry)
+  if (duplicateEntry && !IGNORE_DUPLICATE_MSG)
     throw new Error('Message with same username & sprintCode  exists.')
 
   const discordUserId = await bot.getUserIdFromNickname(user.username)
