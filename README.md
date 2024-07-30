@@ -8,8 +8,8 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 
 - [Bravo! Bot 🎉](#bravo-bot-)
   - [Features](#features)
+  - [TL;DR SETUP](#tldr-setup)
   - [Discord Setup](#discord-setup)
-  - [Project Setup](#project-setup)
   - [Examples](#examples)
     - [Messages](#messages)
     - [CRUD Sprints (praises | templates | users | emojis)](#crud-sprints-praises--templates--users--emojis)
@@ -19,6 +19,30 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 
 - DB is seeded with data.
 - GH Action for linting and testing.
+
+## TL;DR SETUP
+
+1. Join test server https://discord.gg/vAxt2mvsNe
+2. Clone repo, setup and run app:
+
+```sh
+   git clone git@github.com:viliusddd/bravo-bot.git && \
+   cd bravo-bot && \
+   cp .env.example .env && \
+   npm i && \
+   npm run migrate:latest && \
+   npm run dev
+```
+
+3. Execute cUrl POST in cli (or any other cmd from [Examples](#examples)):
+
+```sh
+curl -sX POST http://localhost:3000/messages \
+  -H 'Content-Type: application/json' \
+  -d '{"username": "vjuodz", "sprintCode": "WD-1.3.4"}' | jq
+```
+
+4. Voila! Check message at discord server.
 
 ## Discord Setup
 
@@ -36,18 +60,6 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
     3.  at the bottom, under `GENERATED URL` press copy (is should look similar to `https://discord.com/oauth2/authorize?client_id=1267831555741581382&permissions=0&integration_type=0&scope=bot`)
     4.  paste copied url at you internet browser, choose channel you want your bot to reside.
 7.  Paste yur app token to the `.env` and fill in the rest of the variables.
-
-## Project Setup
-
-1.  Clone repo, `cd` and run `npm i` at project root dir.
-2.  Create copy of `.env.example` and rename it to `.env`
-3.  Add correct values to `.env`
-4.  Seed example data to database and update types (optionally):
-
-```sh
-npm run migrate:latest
-npm run gen:types
-```
 
 ## Examples
 
