@@ -16,7 +16,6 @@ const bot = new BotClient(
   process.env.DISCORD_TOKEN
 )
 
-// builds helper function to create messages
 const createEmojis = createFor(db, 'emoji')
 const createPraises = createFor(db, 'praise')
 const createSprints = createFor(db, 'sprint')
@@ -24,18 +23,15 @@ const createTemplates = createFor(db, 'template')
 const createUsers = createFor(db, 'user')
 
 it('should create new message record and return the row values of new entry in database', async () => {
-  // create side entries in db
   await createEmojis(fakeEmoji())
   await createTemplates(fakeTemplate())
   await createPraises(fakePraise())
   const users = await createUsers(fakeUser())
   const sprints = await createSprints(fakeSprint())
 
-  // create message record
   const body = {username: users[0].username, sprintCode: sprints[0].sprintCode}
   const record = await createRec(db, body.username, body.sprintCode, bot)
 
-  // ASSERT
   expect(record).toEqual(apiMessageMatcher())
 })
 

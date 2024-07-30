@@ -2,8 +2,6 @@ import {omit} from 'lodash/fp'
 import {parse, parseInsertable, parseUpdateable} from '../schema'
 import {fakePraiseFull} from './utils'
 
-// Generally, schemas are tested with a few examples of valid and invalid records.
-
 it('parses a valid record', () => {
   const record = fakePraiseFull()
 
@@ -11,7 +9,6 @@ it('parses a valid record', () => {
 })
 
 it('throws an error due to empty/missing praiseStr (concrete)', () => {
-  // ARRANGE
   const praiseWithoutStr = {
     id: 52
   }
@@ -20,9 +17,6 @@ it('throws an error due to empty/missing praiseStr (concrete)', () => {
     praiseStr: ''
   }
 
-  // ACT & ASSERT
-  // expect our function to throw an error that
-  // mentions an issue with the title
   expect(() => parse(praiseWithoutStr)).toThrow(/praiseStr/i)
   expect(() => parse(praiseEmptyStr)).toThrow(/praiseStr/i)
 })
@@ -37,7 +31,6 @@ it('throws an error due to empty/missing content', () => {
   expect(() => parse(recordEmpty)).toThrow(/praiseStr/i)
 })
 
-// every other function is a derivative of parse()
 describe('parseInsertable', () => {
   it('omits id', () => {
     const parsed = parseInsertable(fakePraiseFull())

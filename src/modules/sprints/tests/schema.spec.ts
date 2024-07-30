@@ -2,8 +2,6 @@ import {omit} from 'lodash/fp'
 import {parse, parseInsertable, parseUpdateable} from '../schema'
 import {fakeSprintFull} from './utils'
 
-// Generally, schemas are tested with a few examples of valid and invalid records.
-
 it('parses a valid record', () => {
   const record = fakeSprintFull()
 
@@ -11,7 +9,6 @@ it('parses a valid record', () => {
 })
 
 it('throws an error due to empty/missing sprintTitle (concrete)', () => {
-  // ARRANGE
   const sprintWithoutTitle = {
     id: 52,
     sprintCode: 'WD-1.3.4'
@@ -22,15 +19,10 @@ it('throws an error due to empty/missing sprintTitle (concrete)', () => {
     sprintCode: 'WD-1.3.4'
   }
 
-  // ACT & ASSERT
-  // expect our function to throw an error that
-  // mentions an issue with the sprintTitle
   expect(() => parse(sprintWithoutTitle)).toThrow(/sprintTitle/i)
   expect(() => parse(sprintEmptyTitle)).toThrow(/sprintTitle/i)
 })
 
-// a more generic vesion of the above test, which makes
-// no assumptions about other properties
 it('throws an error due to empty/missing sprintTitle (generic)', () => {
   const sprintWithoutTitle = omit(['sprintTitle'], fakeSprintFull())
   const sprintEmptyTitle = fakeSprintFull({
@@ -51,7 +43,6 @@ it('throws an error due to empty/missing sprintCode', () => {
   expect(() => parse(recordEmpty)).toThrow(/sprintCode/i)
 })
 
-// every other function is a derivative of parse()
 describe('parseInsertable', () => {
   it('omits id', () => {
     const parsed = parseInsertable(fakeSprintFull())
