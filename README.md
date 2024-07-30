@@ -9,8 +9,12 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 
 ## Discord Setup
 
-1. Enable `GUILD_MEMBERS` intent:
-   1. Ensure your bot has the GUILD_MEMBERS intent enabled in the Discord Developer Portal and in your code.
+1. Create new Application at https://discord.com/developers/applications
+2. Go to your newly created application -> OAuth2 -> `Reset Secret` to get new token.
+3. Copy & rename `.env.example` to `.env`
+4. Paste yur app token to the `.env` and fill in the rest of the variables.
+5. Enable `GUILD_MEMBERS` intent:
+   - Ensure your bot has the GUILD_MEMBERS intent enabled in the Discord Developer Portal and in your code.
 
 ## Project Setup
 
