@@ -36,6 +36,3 @@ jobs:
           DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
           DISCORD_GUILD_ID: ${{ secrets.DISCORD_GUILD_ID }}
           GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
-
-      - name: Build
-        run: npm run build
