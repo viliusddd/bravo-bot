@@ -5,7 +5,7 @@ declare namespace NodeJS {
     PORT: string
     DISCORD_TOKEN: string
     DISCORD_CHANNEL_ID: string
-    DISCORD_GUILD_ID: string
+    DISCORD_SERVER_ID: string
     GIPHY_API_KEY: string
   }
 }

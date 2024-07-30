@@ -13,7 +13,7 @@ import createApp from '@/app'
 
 const bot = new BotClient(
   process.env.DISCORD_CHANNEL_ID,
-  process.env.DISCORD_GUILD_ID,
+  process.env.DISCORD_SERVER_ID,
   process.env.DISCORD_TOKEN
 )
 const db = await createTestDatabase()

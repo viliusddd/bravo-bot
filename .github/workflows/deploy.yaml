@@ -34,5 +34,5 @@ jobs:
           PORT: ${{ vars.PORT }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
-          DISCORD_GUILD_ID: ${{ secrets.DISCORD_GUILD_ID }}
+          DISCORD_SERVER_ID: ${{ secrets.DISCORD_SERVER_ID }}
           GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}

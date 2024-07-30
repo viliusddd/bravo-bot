@@ -12,7 +12,7 @@ import {apiMessageMatcher} from './utils'
 const db = await createTestDatabase()
 const bot = new BotClient(
   process.env.DISCORD_CHANNEL_ID,
-  process.env.DISCORD_GUILD_ID,
+  process.env.DISCORD_SERVER_ID,
   process.env.DISCORD_TOKEN
 )
 
