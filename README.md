@@ -1,4 +1,8 @@
+[![Lint & Test](https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml/badge.svg)](https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml)
+
 # Bravo! Bot 🎉
+
+<img align=right src="src/assets/discord-message.gif" width="40%"/>
 
 It's a dynamic Discord bot powered by a REST API that celebrates user achievements by sending personalized congratulatory messages and celebratory GIFs whenever a sprint is completed. It integrates with a database to fetch random messages and store metadata, ensuring a lively and engaging recognition system on any Discord server.
 
@@ -46,8 +50,8 @@ npm run gen:types
 <summary>Post new message</summary>
 
 ```sh
-curl -Xs POST http://localhost:3000/messages \
-  -H "Content-Type: application/json" \
+curl -sX POST http://localhost:3000/messages \
+  -H 'Content-Type: application/json' \
   -d '{"username": "vjuodz", "sprintCode": "WD-1.3.4"}' | jq
 ```
 
