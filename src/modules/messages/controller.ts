@@ -21,14 +21,14 @@ export default (db: Database, bot: BotClient) => {
       jsonRoute(async (req: Request) => {
         if (Object.keys(req.query).length === 0) return messages.findAll()
 
-        const {username, sprint} = req.query
+        const {username, sprintCode} = req.query
         let record
 
         if (typeof username === 'string') {
           record = await messages.findByUsername(username)
           if (!record) throw new UserNotFound()
-        } else if (typeof sprint === 'string') {
-          record = await messages.findBySprint(sprint)
+        } else if (typeof sprintCode === 'string') {
+          record = await messages.findBySprint(sprintCode)
           if (!record) throw new SprintNotFound()
         } else throw new MessageNotFound()
 

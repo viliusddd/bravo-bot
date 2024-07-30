@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-export default async function (): Promise<string | undefined> {
+export default async function getGif(): Promise<string | undefined> {
   const url = `https://api.giphy.com/v1/gifs/random?${new URLSearchParams({
     api_key: process.env.GIPHY_API_KEY,
     tag: 'celebrate',
