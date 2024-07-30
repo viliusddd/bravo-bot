@@ -8,6 +8,7 @@ import {fakePraise} from '@/modules/praises/tests/utils'
 import {fakeSprint} from '@/modules/sprints/tests/utils'
 import {fakeTemplate} from '@/modules/templates/tests/utils'
 import {fakeUser} from '@/modules/users/tests/utils'
+import '@/services/__mocks__/discordMock'
 import BotClient from '@/services/discord'
 import createApp from '@/app'
 
