@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import createApp from './app'
 import createDB from './database'
-import BotClient from './utils/bot'
+import BotClient from './services/discord'
 
 const {DATABASE_URL, PORT} = process.env
 

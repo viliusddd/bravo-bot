@@ -7,7 +7,7 @@ import {discordHandler, jsonRoute, unsupportedRoute} from '@/utils/middleware'
 import {MessageNotFound} from './errors'
 import {SprintNotFound} from '../sprints/errors'
 import {UserNotFound} from '../users/errors'
-import BotClient from '@/utils/bot'
+import BotClient from '@/services/discord'
 import buildRepository from './repository'
 import * as schema from './schema'
 

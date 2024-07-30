@@ -8,7 +8,7 @@ import {fakePraise} from '@/modules/praises/tests/utils'
 import {fakeSprint} from '@/modules/sprints/tests/utils'
 import {fakeTemplate} from '@/modules/templates/tests/utils'
 import {fakeUser} from '@/modules/users/tests/utils'
-import BotClient from '@/utils/bot'
+import BotClient from '@/services/discord'
 import createApp from '@/app'
 
 const bot = new BotClient(

@@ -4,7 +4,7 @@ import {createFor} from '@tests/utils/records'
 import {omit} from 'lodash/fp'
 import {fakeEmoji, emojiMatcher} from './utils'
 import createApp from '@/app'
-import BotClient from '@/utils/bot'
+import BotClient from '@/services/discord'
 
 const bot = new BotClient(
   process.env.DISCORD_CHANNEL_ID,

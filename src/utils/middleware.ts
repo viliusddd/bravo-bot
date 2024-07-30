@@ -1,7 +1,8 @@
+import 'dotenv/config'
 import type {Response, Request, NextFunction, RequestHandler} from 'express'
 import {StatusCodes} from 'http-status-codes'
-import type BotClient from './bot'
-import getGifUrl from './gif'
+import type BotClient from '@/services/discord'
+import getGifUrl from '@/services/giphy'
 import MethodNotAllowed from './errors/MethodNotAllowed'
 
 type JsonHandler<T> = (
@@ -46,7 +47,7 @@ type DiscordHandler = (
 export const discordHandler: DiscordHandler =
   (bot: BotClient) => (req: Request, res: Response, next: NextFunction) => {
     res.on('finish', async () => {
-      const gifUrl = await getGifUrl()
+      const gifUrl = await getGifUrl(process.env.GIPHY_API_KEY, 'celebrate')
       if (!gifUrl) throw new Error('Gif URL is unavailable.')
 
       bot.sendMessage(res.locals.msg)

@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import {Selectable, Insertable} from 'kysely'
-import type BotClient from '@/utils/bot'
+import type BotClient from '@/services/discord'
 import {snakeToCamel, randFromArray} from './utils'
 import emojisRepo from '../emojis/repository'
 import praisesRepo from '../praises/repository'
