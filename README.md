@@ -34,7 +34,8 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
    npm run dev
 ```
 
-[!IMPORTANT] It appears that discord know when token is exposed in public git repo and resets it, even if it's a throw-away token.
+> [!IMPORTANT]
+> It appears that discord know when token is exposed in public github repo and resets it, even if it's a throw-away token.
 
 3. Execute cUrl POST in cli (or any other cmd from [Examples](#examples)):
 
