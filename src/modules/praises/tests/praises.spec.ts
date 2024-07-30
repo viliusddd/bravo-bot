@@ -4,9 +4,15 @@ import {createFor} from '@tests/utils/records'
 import {omit} from 'lodash/fp'
 import {fakePraise, praiseMatcher} from './utils'
 import createApp from '@/app'
+import BotClient from '@/utils/bot'
 
+const bot = new BotClient(
+  process.env.DISCORD_CHANNEL_ID,
+  process.env.DISCORD_GUILD_ID,
+  process.env.DISCORD_TOKEN
+)
 const db = await createTestDatabase()
-const app = createApp(db)
+const app = createApp(db, bot)
 
 // builds helper function to create praises
 const createPraises = createFor(db, 'praise')
