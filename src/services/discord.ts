@@ -23,7 +23,7 @@ export default class BotClient extends Client {
     this.start()
   }
 
-  public start() {
+  private start() {
     this.once(Events.ClientReady, readyClient => {
       console.log(`Discord bot is ready. Logged in as ${readyClient.user.tag}.`)
     })
