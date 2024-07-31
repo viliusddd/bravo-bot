@@ -8,10 +8,11 @@ import {fakePraise} from '@/modules/praises/tests/utils'
 import {fakeSprint} from '@/modules/sprints/tests/utils'
 import {fakeTemplate} from '@/modules/templates/tests/utils'
 import {fakeUser} from '@/modules/users/tests/utils'
-import '@/services/__mocks__/discordMock'
+import '@/services/mocks/discordMock'
 import BotClient from '@/services/discord'
 import createApp from '@/app'
 
+console.log(process.env.DISCORD_CHANNEL_ID)
 const bot = new BotClient(
   process.env.DISCORD_CHANNEL_ID,
   process.env.DISCORD_SERVER_ID,

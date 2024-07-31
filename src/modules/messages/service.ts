@@ -42,7 +42,7 @@ export async function createRec(
     entry => entry.userId === user.id && entry.sprintId === sprint.id
   )
   if (duplicateEntry && !IGNORE_DUPLICATE_MSG)
-    throw new Error('Message with same username & sprintCode  exists.')
+    throw new Error('Message with same username or sprintCode  exists.')
 
   const discordUserId = await bot.getUserIdFromNickname(user.username)
 

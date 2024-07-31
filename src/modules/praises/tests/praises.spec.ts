@@ -4,7 +4,7 @@ import {createFor} from '@tests/utils/records'
 import {omit} from 'lodash/fp'
 import {fakePraise, praiseMatcher} from './utils'
 import createApp from '@/app'
-import '@/services/__mocks__/discordMock'
+import '@/services/mocks/discordMock'
 import BotClient from '@/services/discord'
 
 const bot = new BotClient(
