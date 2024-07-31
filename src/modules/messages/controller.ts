@@ -11,7 +11,7 @@ import BotClient from '@/services/discord'
 import buildRepository from './repository'
 import * as schema from './schema'
 
-export default (db: Database, bot: any) => {
+export default (db: Database, bot: BotClient) => {
   const router = Router()
   const messages = buildRepository(db)
 
