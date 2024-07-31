@@ -11,21 +11,15 @@
     "dev": "tsx watch src",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier 'src/**/*.{js,ts,mjs,cjs,json}' --write --log-level silent",
+    "lint": "eslint ./src",
     "migrate:latest": "tsx src/database/migrate/bin",
     "gen:types": "kysely-codegen --camel-case --dialect sqlite --out-file src/database/types.ts && prettier --write src/database/types.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
-  "prettier": {
-    "semi": false,
-    "tabWidth": 2,
-    "singleQuote": true,
-    "printWidth": 80,
-    "trailingComma": "none",
-    "arrowParens": "avoid",
-    "bracketSpacing": false
+  "engines": {
+    "node": ">=22.2.0"
   },
   "dependencies": {
     "better-sqlite3": "^11.1.2",

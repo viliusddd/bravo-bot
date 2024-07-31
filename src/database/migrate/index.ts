@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { type Kysely, type MigrationProvider, Migrator } from 'kysely'
+import {type Kysely, type MigrationProvider, Migrator} from 'kysely'
 
 export async function migrateToLatest(
   provider: MigrationProvider,
@@ -7,7 +7,7 @@ export async function migrateToLatest(
 ) {
   const migrator = new Migrator({
     db,
-    provider,
+    provider
   })
 
   return migrator.migrateToLatest()

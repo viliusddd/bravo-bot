@@ -1,8 +1,8 @@
-import { type ErrorRequestHandler } from 'express'
-import { StatusCodes } from 'http-status-codes'
-import { ZodError } from 'zod'
+import {type ErrorRequestHandler} from 'express'
+import {StatusCodes} from 'http-status-codes'
+import {ZodError} from 'zod'
 
-const { NODE_ENV } = process.env
+const {NODE_ENV} = process.env
 const isTest = NODE_ENV === 'test'
 
 // necessary ESLint exception as Express would not recognize this as an error handler
@@ -21,8 +21,8 @@ const jsonErrors: ErrorRequestHandler = (error, req, res, next) => {
   res.status(statusCode).json({
     error: {
       message: error.message ?? 'Internal server error',
-      ...error,
-    },
+      ...error
+    }
   })
 }
 
