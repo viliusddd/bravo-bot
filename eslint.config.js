@@ -28,5 +28,14 @@ export default [
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  prettier
+  prettier,
+  {
+    // It's important to use Kysely<any> and not Kysely<YourDatabase>.
+    // Migrations should never depend on the current code of your app
+    // because they need to work even when the app changes.
+    files: ['**/database/migrat*/*.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
+  }
 ]
