@@ -2,8 +2,10 @@ import globals from 'globals'
 import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
+import js from '@eslint/js'
 
 export default [
+  js.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
     rules: {
@@ -33,6 +35,7 @@ export default [
     // It's important to use Kysely<any> and not Kysely<YourDatabase>.
     // Migrations should never depend on the current code of your app
     // because they need to work even when the app changes.
+    name: 'kysely_any_db',
     files: ['**/database/migrat*/*.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off'
