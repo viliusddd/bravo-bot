@@ -13,7 +13,6 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
   - [Examples](#examples)
     - [Messages](#messages)
     - [CRUD Sprints (praises | templates | users | emojis)](#crud-sprints-praises--templates--users--emojis)
-  - [Link to Peer-programming exercise repository](#link-to-peer-programming-exercise-repository)
 
 ## Features
 
@@ -60,7 +59,7 @@ curl -sX POST http://localhost:3000/messages \
 6.  On the left-side menu, go to `OAuth` and, under `OAuth2 URL Generator`:
     1.  choose `bot`
     2.  choose `applications.commands`
-    3.  at the bottom, under `GENERATED URL` press copy (is should look similar to `https://discord.com/oauth2/authorize?client_id=1267831555741581382&permissions=0&integration_type=0&scope=bot`)
+    3.  at the bottom, under `GENERATED URL` press copy (it should look similar to `https://discord.com/oauth2/authorize?client_id=1267831555741581382&permissions=0&integration_type=0&scope=bot`)
     4.  paste copied url at you internet browser, choose channel you want your bot to reside.
 7.  Paste yur app token to the `.env` and fill in the rest of the variables.
 
@@ -175,7 +174,3 @@ curl -sX DELETE http://localhost:3000/sprints/1 | jq
 ```
 
 </details>
-
-## Link to Peer-programming exercise repository
-
-- https://github.com/viliusddd/3.2.4
