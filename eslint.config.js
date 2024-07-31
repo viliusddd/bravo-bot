@@ -1,13 +1,9 @@
 import globals from 'globals'
 import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
-import airbnb from 'eslint-config-airbnb-base'
-import airbnbTS from 'eslint-config-airbnb-typescript'
 import prettier from 'eslint-config-prettier'
 
 export default [
-  airbnb,
-  airbnbTS,
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
     rules: {
