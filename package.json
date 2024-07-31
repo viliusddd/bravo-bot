@@ -59,5 +59,9 @@
     "tsx": "^4.7.3",
     "typescript": "5.4.5",
     "vitest": "^2.0.4"
+  },
+  "overrides": {
+    "eslint": "^9",
+    "glob": "^10"
   }
 }
