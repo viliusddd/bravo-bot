@@ -62,18 +62,4 @@ export default class BotClient extends Client {
       )
     }
   }
-
-  public async sendImage(imgUrl: string, channelId: string = this.channelId) {
-    const channel = this.channels.cache.get(channelId) as TextChannel
-    if (!channel) console.error('Channel not found')
-
-    try {
-      await channel.send(imgUrl)
-    } catch (error) {
-      console.error(
-        `Failed to send image to channel with id of ${channelId}:`,
-        error
-      )
-    }
-  }
 }
