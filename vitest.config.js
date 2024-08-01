@@ -3,7 +3,12 @@ import path from 'node:path'
 
 export default {
   test: {
-    globals: true
+    globals: true,
+    coverage: {
+      reporter: ['json-summary'],
+      include: ['src/**/*.ts'],
+      exclude: ['src/utils/*', 'src/database/*', 'src/services/*']
+    }
   },
   resolve: {
     alias: {
