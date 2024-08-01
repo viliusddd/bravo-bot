@@ -1,5 +1,11 @@
-[![Lint & Test](https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml/badge.svg)](https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml)
-[![codecov](https://codecov.io/gh/viliusddd/bravo-bot/graph/badge.svg?token=QHATJ4FVU2)](https://codecov.io/gh/viliusddd/bravo-bot)
+<div align="right">
+  <a href="https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml">
+    <img src="https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml/badge.svg" alt="Lint & Test">
+  </a>
+  <a href="https://codecov.io/gh/viliusddd/bravo-bot">
+    <img src="https://codecov.io/gh/viliusddd/bravo-bot/graph/badge.svg?token=QHATJ4FVU2" alt="codecov">
+  </a>
+</div>
 
 # Bravo! Bot 🎉
 
