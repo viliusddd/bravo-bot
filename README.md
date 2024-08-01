@@ -1,11 +1,11 @@
-<div align="right">
+<div align="left">
   <a href="https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml">
     <img src="https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml/badge.svg" alt="Lint & Test">
   </a>
   <a href="https://codecov.io/gh/viliusddd/bravo-bot">
     <img src="https://codecov.io/gh/viliusddd/bravo-bot/graph/badge.svg?token=QHATJ4FVU2" alt="codecov">
   </a>
-</div>
+</div><br>
 
 # Bravo! Bot 🎉
 
@@ -32,14 +32,14 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 
 ## Tech Stack
 
-![TypeScript] ![SQLite] ![Zod] ![Express.js] ![kysely] ![Vitest] ![discord.js]
+![TypeScript] ![SQLite] ![Zod] ![Express.js] ![kysely] ![discord.js] ![Vitest]
 
 [TypeScript]: https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white
 [SQLite]: https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=66B0E4
 [Zod]: https://img.shields.io/badge/Zod-000000?logo=Zod&logoColor=3068B7
 [Express.js]: https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white
 [Vitest]: https://img.shields.io/badge/-Vitest-6E9F18?logo=vitest&logoColor=FCC72B
-[discord.js]: https://img.shields.io/badge/discord.js-5865F2?logo=discord&logoColor=white
+[discord.js]: https://img.shields.io/badge/discord.js-000?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjYjc1Y2ZmIiBkPSJtMzUgODUtMyAxLTYgMmMyIDcgMTEgMTQgMjEgMTMgOSAwIDE2LTUgMjAtMTEtMTAtMS0yNSA0LTMyLTV6bTkyIDEtMTIgMmMtMTQgNi0yOCAxLTMyIDAtMiAwLTItMi01IDFsLTIgMmM3IDYgMTcgMTAgMjYgMTAgMTMgMCAyMi02IDI1LTE1eiIvPjxwYXRoIGZpbGw9IiM1YzZjZmYiIGQ9Ik0xMjggNzVjLTgtNS0xMC0xLTE0IDNsMSAzYzAgNi00IDktMTIgOS03IDAtMTQtMy0xOS04bC02IDcgMjQgMmM5IDAgMjEtMyAyNS01YTIwIDIwIDAgMCAwIDEtNnYtNXptLTU4IDBjLTUtMy05LTItMTMgM3YxYzAgNi01IDExLTExIDExYTExIDExIDAgMCAxLTEwLTVzMCAwLTEgMGMzIDQgNyA2IDE0IDZsMTgtMWMyLTQgMy05IDMtMTR6Ii8+PHBhdGggZmlsbD0iIzVjZmY5ZCIgZD0iTTcwIDYyYy00LTQtOC01LTEzIDF2MTVsMTMtM3ptNDggMWMtNi0zLTI1IDAtMjggMWEzNCAzNCAwIDAgMCA0IDJsMTAgNGM1IDMgOSA0IDEwIDhsMTAtMiA0LTFjLTItNi01LTktMTAtMTJ6Ii8+PHBhdGggZmlsbD0iI2ZmZGI1YyIgZD0iTTgwIDQ4YzAgOCA0IDEzIDEwIDE2bDEyIDEgMTYtMmEzOCAzOCAwIDAgMC01LTNsLTktNGMtNS0yLTktMy0xMS03LTEwLTUtMy04LTEzLTFabS0xMCAxYy00LTMtOC0yLTEzIDJ2MTJsMTMtMXoiLz48cGF0aCBmaWxsPSIjZjc5NDU0IiBkPSJNODQgMzVhMTggMTggMCAwIDAtNCAxM2wxMyAxYTcgNyAwIDAgMS0xLTNjMC01IDUtOCAxMi04IDYgMCAxMSAyIDE1IDZsNS02Yy0xNC00LTI2LTctNDAtM1ptLTE0IDNjLTUtNS05LTEtMTMgNXY4bDEzLTJ6Ii8+PHBhdGggZmlsbD0iI2ZmNWM1YyIgZD0iTTU3IDI3djE2bDEzLTVWMjdabTQ3IDBjLTkgMC0xNiAzLTIwIDhsMTggMiAyMiAxIDItMmMtNi02LTE0LTktMjItOXoiLz48cGF0aCBmaWxsPSIjNTg2NWYyIiBkPSJNMCAyN3Y1NWgyMWM1IDAgOS0xIDEzLTNhMTEgMTEgMCAwIDEgMTItMTJjMi00IDMtOCAzLTEzIDAtNi0xLTEwLTMtMTRzLTUtOC05LTEwLTktMy0xNS0zWm0xMyAxMmg4YzUgMCA4IDEgMTEgNCAyIDIgMyA2IDMgMTFzLTEgOS0zIDEyYy0zIDMtNyA0LTExIDRoLTh6bTMzIDMyYTcgNyAwIDEgMCAwIDE1IDcgNyAwIDAgMCAwLTE1eiIvPjwvc3ZnPg==
 [kysely]: https://img.shields.io/badge/kysely-000.svg?logoColor=white&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzIiIGhlaWdodD0iMTMyIiBmaWxsPSJub25lIj48ZyBjbGlwLXBhdGg9InVybCgjYSkiPjxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB4PSIyIiB5PSIyIiBmaWxsPSIjZmZmIiByeD0iMTYiLz48cGF0aCBmaWxsPSIjMDAwIiBkPSJNNDEuMyAxMDlWMjRoNS4ydjQ5LjNoLjZMOTEuOSAyNGg3bC0zNyA0MC4zTDk4LjUgMTA5SDkyTDU4LjYgNjggNDYuNSA4MS4yVjEwOWgtNS4yWiIvPjwvZz48cmVjdCB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgeD0iMiIgeT0iMiIgc3Ryb2tlPSIjMTIxMjEyIiBzdHJva2Utd2lkdGg9IjQiIHJ4PSIxNiIvPjxkZWZzPjxjbGlwUGF0aCBpZD0iYSI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIHg9IjIiIHk9IjIiIGZpbGw9IiNmZmYiIHJ4PSIxNiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg==
 
 ## TL;DR SETUP
