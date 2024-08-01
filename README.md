@@ -16,8 +16,11 @@ It's a dynamic Discord bot powered by a REST API that celebrates user achievemen
 
 ## Features
 
+- Congratulate a user on a configured Discord server with the GIF and a message.
+- Fetch a random GIF of success from an external GIF.
+- Highlight mentioned username in Discord message.
 - DB is seeded with data.
-- GH Action for linting and testing.
+- Github Workflow for linting and testing.
 
 ## TL;DR SETUP
 
