@@ -1,1 +1,1 @@
-export const IGNORE_DUPLICATE_MSG = true
+export const IGNORE_DUPLICATE_MSG = false

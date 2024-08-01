@@ -31,8 +31,15 @@ export async function createRec(
   const praises = praisesRepo(db)
   const messages = messagesRepo(db)
 
-  const user = userSchema.parse(await users.findByUsername(username))
-  const sprint = sprintSchema.parse(await sprints.findByCode(sprintCode))
+  const parsedUsername = await users.findByUsername(username)
+  if (!parsedUsername) throw new Error("User doesn't exist.")
+
+  const parsedSprint = await sprints.findByCode(sprintCode)
+  if (!parsedSprint) throw new Error("Sprint doesn't exist.")
+
+  const user = userSchema.parse(parsedUsername)
+  const sprint = sprintSchema.parse(parsedSprint)
+
   const templateList: Selectable<Template>[] = await templates.findAll()
   const emojiList: Selectable<Emoji>[] = await emojis.findAll()
   const praisesList: Selectable<Praise>[] = await praises.findAll()

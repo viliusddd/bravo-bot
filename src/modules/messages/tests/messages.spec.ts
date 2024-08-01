@@ -12,7 +12,6 @@ import '@/services/mocks/discordMock'
 import BotClient from '@/services/discord'
 import createApp from '@/app'
 
-console.log(process.env.DISCORD_CHANNEL_ID)
 const bot = new BotClient(
   process.env.DISCORD_CHANNEL_ID,
   process.env.DISCORD_SERVER_ID,
