@@ -5,7 +5,6 @@ export default {
   test: {
     globals: true,
     coverage: {
-      reporter: ['json-summary'],
       include: ['src/**/*.ts'],
       exclude: ['src/utils/*', 'src/database/*', 'src/services/*']
     }

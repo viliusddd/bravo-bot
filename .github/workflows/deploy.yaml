@@ -28,7 +28,7 @@ jobs:
         run: npm run lint
 
       - name: Run unit tests
-        run: npm run coverage
+        run: npm run test
         env:
           DATABASE_URL: ${{ vars.DATABASE_URL }}
           PORT: ${{ vars.PORT }}
@@ -37,8 +37,7 @@ jobs:
           DISCORD_SERVER_ID: ${{ secrets.DISCORD_SERVER_ID }}
           GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
 
-      - name: Publish Coverage Badge
-        uses: wjervis7/vitest-badge-action@v1.0.0
-        if: success() || failure()
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
         with:
-          result-type: lines
+          token: ${{ secrets.CODECOV_TOKEN }}
