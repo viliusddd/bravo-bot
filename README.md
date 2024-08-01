@@ -1,4 +1,5 @@
 [![Lint & Test](https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml/badge.svg)](https://github.com/viliusddd/bravo-bot/actions/workflows/deploy.yaml)
+[![codecov](https://codecov.io/gh/viliusddd/bravo-bot/graph/badge.svg?token=QHATJ4FVU2)](https://codecov.io/gh/viliusddd/bravo-bot)
 
 # Bravo! Bot 🎉
 
