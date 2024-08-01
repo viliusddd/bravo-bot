@@ -27,8 +27,8 @@ jobs:
       - name: Run linters
         run: npm run lint
 
-      - name: Run unit tests
-        run: npm run test
+      - name: Run unit tests with coverage
+        run: npm run coverage
         env:
           DATABASE_URL: ${{ vars.DATABASE_URL }}
           PORT: ${{ vars.PORT }}
@@ -38,6 +38,9 @@ jobs:
           GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@v4
         with:
+          fail_ci_if_error: true
+          files: ./coverage/*.json
+          flags: unittests
           token: ${{ secrets.CODECOV_TOKEN }}
