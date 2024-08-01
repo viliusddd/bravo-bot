@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disddable */
 import path from 'node:path'
 
 export default {
